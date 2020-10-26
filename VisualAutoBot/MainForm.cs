@@ -18,11 +18,8 @@ namespace VisualAutoBot
         {
             if (programTreeView.Nodes.Count == 0)
             {
-                var node1 = new LoopTreeNode() { Text = "Loop1" };
-                var node2 = new LoopTreeNode() { Text = "Loop2" };
-                //node.
-                programTreeView.Nodes.Add(node1);
-                programTreeView.Nodes.Add(node2);
+                var node = new LoopTreeNode() { Text = "Loop" };
+                programTreeView.Nodes.Add(node);
             }
             programTreeView.SelectedNode = null;
         }
@@ -85,6 +82,8 @@ namespace VisualAutoBot
         {
             if (clicked != null)
             {
+                panelEditNode.Controls.Clear();
+
                 var node = clicked as BaseTreeNode;
 
                 if (node.Parameters.Count > 0)
@@ -101,6 +100,7 @@ namespace VisualAutoBot
                         {
                             Text = item.Value.ToString(),
                             Width = panelEditNode.Width - 10,
+                            Tag = item.Key,
                         };
                         edit.Margin = new Padding(edit.Margin.Left, edit.Margin.Top, edit.Margin.Right, 15);
 
@@ -132,6 +132,17 @@ namespace VisualAutoBot
 
         private void SaveButton_Click(object sender, EventArgs e)
         {
+            var node = clicked as BaseTreeNode;
+            foreach(var control in panelEditNode.Controls)
+            {
+                if(control is TextBox)
+                {
+                    var textBox = control as TextBox;
+                    node.Parameters[textBox.Tag.ToString()] = textBox.Text;
+                }
+            }
+
+            CancelButton_Click(this, e);
         }
 
         private void CancelButton_Click(object sender, EventArgs e)
