@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,19 +10,49 @@ namespace VisualAutoBot.ProgramNodes
 {
     abstract class BaseTreeNode : TreeNode, IRunnableTreeNode
     {
-        public BaseTreeNode() : base()
-        {
-            Init();
+        private string _nodeText = "";
+        public string NodeText { 
+            get
+            {
+                return _nodeText;
+            }
+            set
+            {
+                Text = _nodeText = value;
+            }
         }
 
-        internal Dictionary<string, string> Parameters = new Dictionary<string, string>();
-
-        public void Save()
+        public static Dictionary<string, Type> AvailableTypes = new Dictionary<string, Type>()
         {
+            { "WaitTreeNode", typeof(WaitTreeNode) },
+        };
 
+        internal Dictionary<string, object> Parameters = new Dictionary<string, object>();
+
+        public BaseTreeNode() : base() {
+            NodeText = GetType().Name;
         }
 
-        public abstract void Init();
-        public abstract void Run();
+        public virtual void Save(Dictionary<string, object> _data)
+        {
+            foreach(var item in _data)
+            {
+                if(Parameters.ContainsKey(item.Key))
+                {
+                    Parameters[item.Key] = item.Value;
+                }
+            }
+        }
+
+        public abstract void Execute();
+
+        public void Run()
+        {
+            BackColor = Color.LightGreen;
+
+            Execute();
+
+            BackColor = Color.Empty;
+        }
     }
 }

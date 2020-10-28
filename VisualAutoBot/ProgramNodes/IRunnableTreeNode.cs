@@ -8,6 +8,6 @@ namespace VisualAutoBot.ProgramNodes
 {
     interface IRunnableTreeNode
     {
-        void Run();
+        void Execute();
     }
 }

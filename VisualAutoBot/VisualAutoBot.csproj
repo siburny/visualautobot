@@ -50,8 +50,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CustomDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="ProgramNodes\IRunnableTreeNode.cs" />
     <Compile Include="ProgramNodes\BaseTreeNode.cs" />
+    <Compile Include="ProgramNodes\WaitTreeNode.cs" />
     <Compile Include="ProgramNodes\ScreenshotTreeNode.cs" />
     <Compile Include="ProgramNodes\LoopTreeNode.cs" />
     <Compile Include="MainForm.cs">

@@ -1,5 +1,8 @@
 ﻿using LeaxDev.WindowStates;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
 using System.Windows.Forms;
 using VisualAutoBot.ProgramNodes;
 
@@ -7,6 +10,8 @@ namespace VisualAutoBot
 {
     public partial class MainForm : Form
     {
+        public bool IsRunning = false;
+
         public MainForm()
         {
             InitializeComponent();
@@ -18,7 +23,7 @@ namespace VisualAutoBot
         {
             if (programTreeView.Nodes.Count == 0)
             {
-                var node = new LoopTreeNode() { Text = "Loop" };
+                var node = new LoopTreeNode();
                 programTreeView.Nodes.Add(node);
             }
             programTreeView.SelectedNode = null;
@@ -45,14 +50,12 @@ namespace VisualAutoBot
             settings.Save();
         }
 
-        private void buttonAddNode_Click(object sender, EventArgs e)
-        {
+        #region TreeView code
 
-        }
-
+        TreeNode clickedNode = null;
         private void programTreeView_BeforeSelect(object sender, TreeViewCancelEventArgs e)
         {
-            e.Cancel = clicked == null;
+            e.Cancel = clickedNode == null;
         }
 
         private void programTreeView_MouseDown(object sender, MouseEventArgs e)
@@ -71,20 +74,19 @@ namespace VisualAutoBot
                 }
                 else
                 {
-                    clicked = hit.Node;
+                    clickedNode = hit.Node;
                 }
 
             }
         }
 
-        TreeNode clicked = null;
         private void programTreeView_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
-            if (clicked != null)
+            if (clickedNode != null)
             {
                 panelEditNode.Controls.Clear();
 
-                var node = clicked as BaseTreeNode;
+                var node = clickedNode as BaseTreeNode;
 
                 if (node.Parameters.Count > 0)
                 {
@@ -132,15 +134,18 @@ namespace VisualAutoBot
 
         private void SaveButton_Click(object sender, EventArgs e)
         {
-            var node = clicked as BaseTreeNode;
+            var node = clickedNode as BaseTreeNode;
+            var data = new Dictionary<string, object>();
+
             foreach(var control in panelEditNode.Controls)
             {
                 if(control is TextBox)
                 {
                     var textBox = control as TextBox;
-                    node.Parameters[textBox.Tag.ToString()] = textBox.Text;
+                    data.Add(textBox.Tag.ToString(), textBox.Text);
                 }
             }
+            node.Save(data);
 
             CancelButton_Click(this, e);
         }
@@ -148,8 +153,98 @@ namespace VisualAutoBot
         private void CancelButton_Click(object sender, EventArgs e)
         {
             panelEditNode.Controls.Clear();
-            clicked = null;
+            clickedNode = null;
             programTreeView.SelectedNode = null;
+        }
+
+        private void programTreeView_BeforeCollapse(object sender, TreeViewCancelEventArgs e)
+        {
+            e.Cancel = true;
+        }
+
+        #endregion
+
+        #region ToolBar code
+
+        private void toolAddNode_Click(object sender, EventArgs e)
+        {
+            if(clickedNode == null)
+            {
+                MessageBox.Show("Please select a location to insert.");
+                return;
+            }
+
+            string selected = CustomDialog.ShowSelectionDialog(BaseTreeNode.AvailableTypes.Select(x => x.Key).ToArray());
+            if(!string.IsNullOrEmpty(selected))
+            {
+                BaseTreeNode node = Activator.CreateInstance(BaseTreeNode.AvailableTypes[selected]) as BaseTreeNode;
+                clickedNode.Nodes.Add(node);
+
+                programTreeView.ExpandAll();
+                programTreeView.SelectedNode = clickedNode = node;
+                programTreeView_NodeMouseClick(sender, null);
+            }
+        }
+
+        private void toolStartScript_Click(object sender, EventArgs e)
+        {
+            if(IsRunning)
+            {
+                return;
+            }
+
+            CancelButton_Click(this, null);
+
+            SignalToExit = false;
+            IsRunning = true;
+            toolAddNode.Enabled = false;
+            toolStartScript.Enabled = false;
+            toolStopScript.Enabled = true;
+
+            Thread runner = new Thread(ScriptRunner);
+            runner.Start();
+        }
+
+        private void toolStopScript_Click(object sender, EventArgs e)
+        {
+            if (!IsRunning)
+            {
+                return;
+            }
+
+            SignalToExit = true;
+            toolStopScript.Text = "Stopping ...";
+            toolStopScript.Enabled = false;
+        }
+
+        #endregion
+
+        bool SignalToExit = false;
+        public void ScriptRunner()
+        {
+            while (true)
+            {
+                var start = programTreeView.Nodes[0] as LoopTreeNode;
+
+                foreach(var node in start.Nodes)
+                {
+                    if (SignalToExit) break;
+                    
+                    (node as BaseTreeNode).Run();
+                }
+
+                if (SignalToExit) break;
+            }
+
+            Invoke(new Action(() =>
+            {
+                IsRunning = false;
+                toolAddNode.Enabled = true;
+                toolStartScript.Enabled = true;
+                toolStopScript.Enabled = false;
+
+                toolStopScript.Text = "Stop";
+            }));
         }
     }
 }

@@ -30,9 +30,16 @@ namespace VisualAutoBot
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.programTreeView = new System.Windows.Forms.TreeView();
             this.buttonAddNode = new System.Windows.Forms.Button();
             this.panelEditNode = new System.Windows.Forms.FlowLayoutPanel();
+            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.toolAddNode = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStartScript = new System.Windows.Forms.ToolStripButton();
+            this.toolStopScript = new System.Windows.Forms.ToolStripButton();
+            this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // programTreeView
@@ -47,20 +54,17 @@ namespace VisualAutoBot
             this.programTreeView.Size = new System.Drawing.Size(556, 1537);
             this.programTreeView.TabIndex = 0;
             this.programTreeView.TabStop = false;
+            this.programTreeView.BeforeCollapse += new System.Windows.Forms.TreeViewCancelEventHandler(this.programTreeView_BeforeCollapse);
             this.programTreeView.BeforeSelect += new System.Windows.Forms.TreeViewCancelEventHandler(this.programTreeView_BeforeSelect);
             this.programTreeView.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.programTreeView_NodeMouseClick);
             this.programTreeView.MouseDown += new System.Windows.Forms.MouseEventHandler(this.programTreeView_MouseDown);
             // 
             // buttonAddNode
             // 
-            this.buttonAddNode.Location = new System.Drawing.Point(18, 14);
-            this.buttonAddNode.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.buttonAddNode.Location = new System.Drawing.Point(0, 0);
             this.buttonAddNode.Name = "buttonAddNode";
-            this.buttonAddNode.Size = new System.Drawing.Size(112, 36);
-            this.buttonAddNode.TabIndex = 1;
-            this.buttonAddNode.Text = "Add";
-            this.buttonAddNode.UseVisualStyleBackColor = true;
-            this.buttonAddNode.Click += new System.EventHandler(this.buttonAddNode_Click);
+            this.buttonAddNode.Size = new System.Drawing.Size(75, 23);
+            this.buttonAddNode.TabIndex = 4;
             // 
             // panelEditNode
             // 
@@ -69,11 +73,59 @@ namespace VisualAutoBot
             this.panelEditNode.Size = new System.Drawing.Size(806, 346);
             this.panelEditNode.TabIndex = 2;
             // 
+            // toolStrip1
+            // 
+            this.toolStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
+            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolAddNode,
+            this.toolStripSeparator1,
+            this.toolStartScript,
+            this.toolStopScript});
+            this.toolStrip1.Location = new System.Drawing.Point(0, 0);
+            this.toolStrip1.Name = "toolStrip1";
+            this.toolStrip1.Size = new System.Drawing.Size(2058, 31);
+            this.toolStrip1.TabIndex = 3;
+            this.toolStrip1.Text = "MainToolStrip";
+            // 
+            // toolAddNode
+            // 
+            this.toolAddNode.Image = ((System.Drawing.Image)(resources.GetObject("toolAddNode.Image")));
+            this.toolAddNode.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolAddNode.Name = "toolAddNode";
+            this.toolAddNode.Size = new System.Drawing.Size(65, 28);
+            this.toolAddNode.Text = "Add";
+            this.toolAddNode.Click += new System.EventHandler(this.toolAddNode_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 31);
+            // 
+            // toolStartScript
+            // 
+            this.toolStartScript.Image = ((System.Drawing.Image)(resources.GetObject("toolStartScript.Image")));
+            this.toolStartScript.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStartScript.Name = "toolStartScript";
+            this.toolStartScript.Size = new System.Drawing.Size(68, 28);
+            this.toolStartScript.Text = "Start";
+            this.toolStartScript.Click += new System.EventHandler(this.toolStartScript_Click);
+            // 
+            // toolStopScript
+            // 
+            this.toolStopScript.Enabled = false;
+            this.toolStopScript.Image = ((System.Drawing.Image)(resources.GetObject("toolStopScript.Image")));
+            this.toolStopScript.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStopScript.Name = "toolStopScript";
+            this.toolStopScript.Size = new System.Drawing.Size(68, 28);
+            this.toolStopScript.Text = "Stop";
+            this.toolStopScript.Click += new System.EventHandler(this.toolStopScript_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(2058, 1670);
+            this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.panelEditNode);
             this.Controls.Add(this.buttonAddNode);
             this.Controls.Add(this.programTreeView);
@@ -83,7 +135,10 @@ namespace VisualAutoBot
             this.Text = "Visual AutoBot";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Load += new System.EventHandler(this.MainForm_Load);
+            this.toolStrip1.ResumeLayout(false);
+            this.toolStrip1.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -92,5 +147,10 @@ namespace VisualAutoBot
         private System.Windows.Forms.TreeView programTreeView;
         private System.Windows.Forms.Button buttonAddNode;
         internal System.Windows.Forms.FlowLayoutPanel panelEditNode;
+        private System.Windows.Forms.ToolStrip toolStrip1;
+        private System.Windows.Forms.ToolStripButton toolAddNode;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripButton toolStartScript;
+        private System.Windows.Forms.ToolStripButton toolStopScript;
     }
 }

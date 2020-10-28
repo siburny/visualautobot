@@ -9,16 +9,18 @@ namespace VisualAutoBot.ProgramNodes
 {
     class LoopTreeNode : BaseTreeNode
     {
-        public override void Init()
+        public LoopTreeNode() : base()
         {
+            NodeText = "Loop";
+
             Parameters.Add("WindowName", "TrainStation - Pixel");
         }
 
-        public override void Run()
+        public override void Execute()
         {
             for (int i = 0; i < Nodes.Count; i++)
             {
-                (Nodes[i] as IRunnableTreeNode).Run();
+                (Nodes[i] as BaseTreeNode).Run();
             }
         }
     }
