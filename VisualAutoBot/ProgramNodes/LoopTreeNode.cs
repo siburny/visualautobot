@@ -25,6 +25,19 @@ namespace VisualAutoBot.ProgramNodes
             }
         }
 
+        public override void FromJSON(JObject json)
+        {
+            base.FromJSON(json);
+
+            if(json.ContainsKey("Nodes"))
+            {
+                foreach(JObject obj in json["Nodes"])
+                {
+                    CreateNode(obj, Nodes);
+                }
+            }
+        }
+
         public override JToken ToJSON()
         {
             JToken json = base.ToJSON();

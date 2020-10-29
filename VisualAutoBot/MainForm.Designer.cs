@@ -36,6 +36,8 @@ namespace VisualAutoBot
             this.panelEditNode = new System.Windows.Forms.FlowLayoutPanel();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolAddNode = new System.Windows.Forms.ToolStripButton();
+            this.toolMoveUp = new System.Windows.Forms.ToolStripButton();
+            this.toolMoveDown = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStartScript = new System.Windows.Forms.ToolStripButton();
             this.toolStopScript = new System.Windows.Forms.ToolStripButton();
@@ -44,6 +46,7 @@ namespace VisualAutoBot
             // 
             // programTreeView
             // 
+            this.programTreeView.AllowDrop = true;
             this.programTreeView.FullRowSelect = true;
             this.programTreeView.HideSelection = false;
             this.programTreeView.Location = new System.Drawing.Point(18, 60);
@@ -55,8 +58,11 @@ namespace VisualAutoBot
             this.programTreeView.TabIndex = 0;
             this.programTreeView.TabStop = false;
             this.programTreeView.BeforeCollapse += new System.Windows.Forms.TreeViewCancelEventHandler(this.programTreeView_BeforeCollapse);
+            this.programTreeView.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.programTreeView_ItemDrag);
             this.programTreeView.BeforeSelect += new System.Windows.Forms.TreeViewCancelEventHandler(this.programTreeView_BeforeSelect);
             this.programTreeView.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.programTreeView_NodeMouseClick);
+            this.programTreeView.DragDrop += new System.Windows.Forms.DragEventHandler(this.programTreeView_DragDrop);
+            this.programTreeView.DragOver += new System.Windows.Forms.DragEventHandler(this.programTreeView_DragOver);
             this.programTreeView.MouseDown += new System.Windows.Forms.MouseEventHandler(this.programTreeView_MouseDown);
             // 
             // buttonAddNode
@@ -78,6 +84,8 @@ namespace VisualAutoBot
             this.toolStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolAddNode,
+            this.toolMoveUp,
+            this.toolMoveDown,
             this.toolStripSeparator1,
             this.toolStartScript,
             this.toolStopScript});
@@ -95,6 +103,24 @@ namespace VisualAutoBot
             this.toolAddNode.Size = new System.Drawing.Size(65, 28);
             this.toolAddNode.Text = "Add";
             this.toolAddNode.Click += new System.EventHandler(this.toolAddNode_Click);
+            // 
+            // toolMoveUp
+            // 
+            this.toolMoveUp.Image = ((System.Drawing.Image)(resources.GetObject("toolMoveUp.Image")));
+            this.toolMoveUp.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolMoveUp.Name = "toolMoveUp";
+            this.toolMoveUp.Size = new System.Drawing.Size(56, 28);
+            this.toolMoveUp.Text = "Up";
+            this.toolMoveUp.Click += new System.EventHandler(this.toolMoveUp_Click);
+            // 
+            // toolMoveDown
+            // 
+            this.toolMoveDown.Image = ((System.Drawing.Image)(resources.GetObject("toolMoveDown.Image")));
+            this.toolMoveDown.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolMoveDown.Name = "toolMoveDown";
+            this.toolMoveDown.Size = new System.Drawing.Size(76, 28);
+            this.toolMoveDown.Text = "Down";
+            this.toolMoveDown.Click += new System.EventHandler(this.toolMoveDown_Click);
             // 
             // toolStripSeparator1
             // 
@@ -152,5 +178,7 @@ namespace VisualAutoBot
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton toolStartScript;
         private System.Windows.Forms.ToolStripButton toolStopScript;
+        private System.Windows.Forms.ToolStripButton toolMoveUp;
+        private System.Windows.Forms.ToolStripButton toolMoveDown;
     }
 }

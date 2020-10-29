@@ -58,7 +58,23 @@ namespace VisualAutoBot
 
         private void LoadScript()
         {
+            string file = "";
 
+            try
+            {
+                file = File.ReadAllText("script.json");
+            }
+            catch (Exception) { }
+
+            JArray json = JArray.Parse(file);
+            if(json[0] != null && json[0] is JObject && (json[0] as JObject).ContainsKey("Type") && ((json[0] as JObject)["Type"] as JValue).Value.ToString() == "LoopTreeNode")
+            {
+                foreach(JObject obj in json)
+                {
+                    BaseTreeNode.CreateNode(obj, programTreeView.Nodes);
+                }
+            }
+            programTreeView.ExpandAll();
         }
 
         private void SaveScript()
@@ -191,6 +207,49 @@ namespace VisualAutoBot
             e.Cancel = true;
         }
 
+        private void programTreeView_DragDrop(object sender, DragEventArgs e)
+        {
+            BaseTreeNode draggedNode = e.Data.GetData(e.Data.GetFormats()[0]) as BaseTreeNode;
+            if (draggedNode == null)
+            {
+                return;
+            }
+
+            var hit = programTreeView.HitTest(programTreeView.PointToClient(new System.Drawing.Point(e.X, e.Y)));
+            if (hit.Node != null && hit.Node.Parent != null)
+            {
+                draggedNode.Remove();
+                hit.Node.Parent.Nodes.Insert(hit.Node.Parent.Nodes.IndexOf(hit.Node), draggedNode);
+            }
+        }
+
+        private void programTreeView_ItemDrag(object sender, ItemDragEventArgs e)
+        {
+            BaseTreeNode node = (BaseTreeNode)e.Item;
+            DoDragDrop(node, DragDropEffects.Move);
+        }
+
+        private void programTreeView_DragOver(object sender, DragEventArgs e)
+        {
+            BaseTreeNode draggedNode = e.Data.GetData(e.Data.GetFormats()[0]) as BaseTreeNode;
+            if (draggedNode == null)
+            {
+                e.Effect = DragDropEffects.None;
+                return;
+            }
+
+            var hit = programTreeView.HitTest(programTreeView.PointToClient(new System.Drawing.Point(e.X, e.Y)));
+            if (hit.Node != null && hit.Node != draggedNode &&
+                hit.Node.Parent != null && hit.Node.Parent == draggedNode.Parent)
+            {
+                e.Effect = DragDropEffects.Move;
+            }
+            else
+            {
+                e.Effect = DragDropEffects.None;
+            }
+        }
+
         #endregion
 
         #region ToolBar code
@@ -244,6 +303,22 @@ namespace VisualAutoBot
             SignalToExit = true;
             toolStopScript.Text = "Stopping ...";
             toolStopScript.Enabled = false;
+        }
+
+        private void toolMoveUp_Click(object sender, EventArgs e)
+        {
+            if (clickedNode == null)
+            {
+                return;
+            }
+        }
+
+        private void toolMoveDown_Click(object sender, EventArgs e)
+        {
+            if (clickedNode == null)
+            {
+                return;
+            }
         }
 
         #endregion

@@ -12,18 +12,16 @@ namespace VisualAutoBot.ProgramNodes
 {
     class WaitTreeNode : BaseTreeNode
     {
-        public WaitTreeNode() : this(0) { }
-
-        public WaitTreeNode(int ms)
+        public WaitTreeNode()
         {
             NodeText = "Delay";
 
-            Parameters.Add("Delay", ms.ToString());
+            Parameters.Add("Delay", 0);
         }
 
         public override void Save(Dictionary<string, object> _data)
         {
-            if(_data.ContainsKey("Delay"))
+            if (_data.ContainsKey("Delay"))
             {
                 if(int.TryParse(_data["Delay"].ToString(), out int res) && res >= 0)
                 {
@@ -38,6 +36,12 @@ namespace VisualAutoBot.ProgramNodes
             }
 
             base.Save(_data);
+        }
+
+        public override void Refresh()
+        {
+            int res = Convert.ToInt32(Parameters["Delay"]);
+            Text = NodeText + " (" + (res == 0 ? "no delay" : res.ToString() + " ms") + ")";
         }
 
         public override void Execute()

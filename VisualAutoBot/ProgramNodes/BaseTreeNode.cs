@@ -9,7 +9,8 @@ namespace VisualAutoBot.ProgramNodes
     abstract class BaseTreeNode : TreeNode, IRunnableTreeNode
     {
         private string _nodeText = "";
-        public string NodeText { 
+        public string NodeText
+        {
             get
             {
                 return _nodeText;
@@ -24,31 +25,69 @@ namespace VisualAutoBot.ProgramNodes
         {
             { "WaitTreeNode", typeof(WaitTreeNode) },
             { "CalcTreeNode", typeof(CalcTreeNode) },
+            { "ScreenshotTreeNode", typeof(ScreenshotTreeNode) },
         };
 
         internal Dictionary<string, object> Parameters = new Dictionary<string, object>();
 
-        public BaseTreeNode() : base() {
+        public BaseTreeNode() : base()
+        {
             NodeText = GetType().Name;
         }
 
         public virtual void Save(Dictionary<string, object> _data)
         {
-            foreach(var item in _data)
+            foreach (var item in _data)
             {
-                if(Parameters.ContainsKey(item.Key))
+                if (Parameters.ContainsKey(item.Key))
                 {
                     Parameters[item.Key] = item.Value;
                 }
             }
+            Refresh();
+        }
+
+        internal static void CreateNode(JObject json, TreeNodeCollection nodes)
+        {
+            if (!json.ContainsKey("Type"))
+            {
+                return;
+            }
+
+            string type = ((JValue)json["Type"]).ToString();
+
+            if (type == "LoopTreeNode")
+            {
+                (nodes[0] as BaseTreeNode).FromJSON(json);
+            }
+            else if (AvailableTypes.ContainsKey(type))
+            {
+                var node = Activator.CreateInstance(AvailableTypes[type]) as BaseTreeNode;
+                nodes.Add(node);
+
+                node.FromJSON(json);
+            }
+        }
+
+        public virtual void FromJSON(JObject json)
+        {
+            foreach (var param in json.Properties())
+            {
+                if (Parameters.ContainsKey(param.Name))
+                {
+                    Parameters[param.Name] = (param.Value as JValue).Value;
+                }
+            }
+
+            Refresh();
         }
 
         public virtual JToken ToJSON()
         {
             JObject json = new JObject();
-            
+
             json.Add("Type", GetType().Name);
-            foreach(var param in Parameters)
+            foreach (var param in Parameters)
             {
                 json.Add(param.Key, new JValue(param.Value));
             }
@@ -56,6 +95,8 @@ namespace VisualAutoBot.ProgramNodes
 
             return json;
         }
+
+        public virtual void Refresh() { }
 
         public abstract void Execute();
 

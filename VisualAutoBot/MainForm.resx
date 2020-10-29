@@ -128,13 +128,31 @@
         MLIBuDCKTaRi6hmACyMrxIWhIYEJQJIoNpEKRg2AGICMocJogIEBAGjJTpCriTUXAAAAAElFTkSuQmCC
 </value>
   </data>
+  <data name="toolMoveUp.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAACsSURBVDhPY8AFvnz5YvDt27cPIAxiQ4WJAzDNMRP2/Qdh
+        kgxB1swQPAeMiTYEm2aiDcGnGYZxGoJNMz42iiG4NAPF4HwQG6chQMaE649e/+eLXYgiiW4ASAxmCEgt
+        SA9IL9gVX79+XXDi+tP/2bMOw01GNwDmUpAakFqQHrBmGAAJwDSD+OgGgMRghmBohoHv378rQJlYDQAB
+        ZDV4AS4DiAbDxABkDBVGAwwMAB2MjG5JnvmuAAAAAElFTkSuQmCC
+</value>
+  </data>
+  <data name="toolMoveDown.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAAC0SURBVDhPY8AFvnz5cuDVu0//QRjEhgoTD0Ca+GMX/gfh
+        UQPoZQBQkQEQPwDRUD6GAehq4AAk8PXrtw9Bnbv+P37x4SNUIYoBIDGQXHDXrv8gtSA+VDvYgAeBHTv/
+        MwTP+S8UvxhmyAMkAx6AxEByIDUgtSAxqHaIC5AVgOhnrz+ANYMwiI0sB3MlVDsEYDOEO2oBGBPUDAPo
+        hiBjgpphAJshRGuGAWRDSNYMAzBD8GtmYAAAYFVVbqd9P5cAAAAASUVORK5CYII=
+</value>
+  </data>
   <data name="toolStartScript.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
         YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAACjSURBVDhPY0AG3759O//lyxcDKJd0ADTgPxC///79ewJU
         iDQAMiBmXsT/ey/v/f/69ev89+/fC0CliAMgAyy6TP67THT4v/vKTpBrSPMSzAAY7t7ZSZqX0A0AYZK8
-        hM0AECbaS7gMgGGCXiJkQP3mWvIMAHlh/bm15HkBFIiXHl0iLxBBTn7++jnp0Ui0k9EByACSnIwOQAYA
-        MUWZicTszMAAALpZKJV089skAAAAAElFTkSuQmCC
+        hM0AECbaS7gMgGGCXiJkQP3mWvIMAHlh/bm15HkBFIiXHl0iLxBBTn7+8jnp0Ui0k9EByACSnIwOQAYA
+        MUWZicTszMAAALgTKJOpgIrYAAAAAElFTkSuQmCC
 </value>
   </data>
   <data name="toolStopScript.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
