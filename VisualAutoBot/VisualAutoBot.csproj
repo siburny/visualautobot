@@ -34,6 +34,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -55,6 +58,7 @@
     </Compile>
     <Compile Include="ProgramNodes\IRunnableTreeNode.cs" />
     <Compile Include="ProgramNodes\BaseTreeNode.cs" />
+    <Compile Include="ProgramNodes\CalcTreeNode.cs" />
     <Compile Include="ProgramNodes\WaitTreeNode.cs" />
     <Compile Include="ProgramNodes\ScreenshotTreeNode.cs" />
     <Compile Include="ProgramNodes\LoopTreeNode.cs" />

@@ -1,9 +1,7 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace VisualAutoBot.ProgramNodes
@@ -25,6 +23,7 @@ namespace VisualAutoBot.ProgramNodes
         public static Dictionary<string, Type> AvailableTypes = new Dictionary<string, Type>()
         {
             { "WaitTreeNode", typeof(WaitTreeNode) },
+            { "CalcTreeNode", typeof(CalcTreeNode) },
         };
 
         internal Dictionary<string, object> Parameters = new Dictionary<string, object>();
@@ -42,6 +41,20 @@ namespace VisualAutoBot.ProgramNodes
                     Parameters[item.Key] = item.Value;
                 }
             }
+        }
+
+        public virtual JToken ToJSON()
+        {
+            JObject json = new JObject();
+            
+            json.Add("Type", GetType().Name);
+            foreach(var param in Parameters)
+            {
+                json.Add(param.Key, new JValue(param.Value));
+            }
+
+
+            return json;
         }
 
         public abstract void Execute();

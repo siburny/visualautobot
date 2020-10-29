@@ -1,6 +1,9 @@
 ﻿using LeaxDev.WindowStates;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
@@ -17,6 +20,8 @@ namespace VisualAutoBot
             InitializeComponent();
 
             EnsureLoopNode();
+
+            LoadScript();
         }
 
         private void EnsureLoopNode()
@@ -26,6 +31,7 @@ namespace VisualAutoBot
                 var node = new LoopTreeNode();
                 programTreeView.Nodes.Add(node);
             }
+
             programTreeView.SelectedNode = null;
         }
 
@@ -44,10 +50,33 @@ namespace VisualAutoBot
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             var settings = Properties.Settings.Default;
-
             settings.WindowStates.Save(this);
-
             settings.Save();
+
+            SaveScript();
+        }
+
+        private void LoadScript()
+        {
+
+        }
+
+        private void SaveScript()
+        {
+            JArray json = new JArray();
+
+            foreach(var node in programTreeView.Nodes)
+            {
+                json.Add(((BaseTreeNode)node).ToJSON());
+            }
+
+            try
+            {
+                File.Move("script.json", "script-" + DateTime.Now.ToString("yyyyMMdd'-'HHmmss") + ".json");
+            }
+            catch(Exception) { }
+
+            File.WriteAllText("script.json", JsonConvert.SerializeObject(json));
         }
 
         #region TreeView code

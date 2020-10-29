@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,6 +23,20 @@ namespace VisualAutoBot.ProgramNodes
             {
                 (Nodes[i] as BaseTreeNode).Run();
             }
+        }
+
+        public override JToken ToJSON()
+        {
+            JToken json = base.ToJSON();
+            JArray array = new JArray();
+
+            json["Nodes"] = array;
+            foreach (var node in Nodes)
+            {
+                array.Add(((BaseTreeNode)node).ToJSON());
+            }
+
+            return json;
         }
     }
 }

@@ -10,15 +10,13 @@ using System.Windows.Forms;
 
 namespace VisualAutoBot.ProgramNodes
 {
-    class WaitTreeNode : BaseTreeNode
+    class CalcTreeNode : BaseTreeNode
     {
-        public WaitTreeNode() : this(0) { }
-
-        public WaitTreeNode(int ms)
+        public CalcTreeNode()
         {
             NodeText = "Delay";
 
-            Parameters.Add("Delay", ms.ToString());
+            Parameters.Add("Delay", 0);
         }
 
         public override void Save(Dictionary<string, object> _data)
