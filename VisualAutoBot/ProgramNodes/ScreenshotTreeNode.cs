@@ -17,6 +17,16 @@ namespace VisualAutoBot.ProgramNodes
             NodeText = "Screenshot";
 
             Parameters.Add("Variable", "screenshot");
+
+            MenuItem previewMenu = new MenuItem("Preview");
+            previewMenu.Click += PreviewMenu_Click;
+
+            ContextMenu = new ContextMenu(new MenuItem[] { previewMenu });
+        }
+
+        private void PreviewMenu_Click(object sender, EventArgs e)
+        {
+            
         }
 
         public override void Save(Dictionary<string, object> _data)

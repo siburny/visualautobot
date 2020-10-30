@@ -19,9 +19,18 @@ namespace VisualAutoBot.ProgramNodes
 
         public override void Execute()
         {
-            for (int i = 0; i < Nodes.Count; i++)
+            var window = ScreenUtilities.GetWindowByName(Parameters["WindowName"].ToString());
+            if(window == default(IntPtr))
             {
-                (Nodes[i] as BaseTreeNode).Run();
+                throw new ScriptException($"Cannot find game window: {Parameters["WindowName"].ToString()}", this);
+            }
+            
+            SetVariable("WindowHandle", window);
+
+            foreach (var node in Nodes)
+            {
+                //if (SignalToExit) break;
+                (node as BaseTreeNode).Run();
             }
         }
 

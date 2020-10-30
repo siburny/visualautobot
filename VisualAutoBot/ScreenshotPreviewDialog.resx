@@ -117,44 +117,4 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <metadata name="toolStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
-  </metadata>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="toolAddNode.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAADNSURBVDhPlZE7DsMgEEQ5UooUqbkFXQrO4iKnpEUu3Fi4
-        JB60Ey8EY3mkEd95LGColFLWXtf1sbcLjL5sOxdCr8+zWCDLNE0ZHkJkc3EDKLbWjiE62JoADdm27V2B
-        bgLooxo1WQXpNox+90pY7J18ZkIkXldCgPe+tBgjoAFY2+cPAISSMInN2DDPcxeAtRhj/1cIEf8AGAPi
-        nMshhIzfkMi/ABGQBpSKcPqwAi0Ceu6+QSueDLePiPElAOKbaADDl1egNOR2mCKkDhvzBeT39L9Eu3Wi
-        AAAAAElFTkSuQmCC
-</value>
-  </data>
-  <data name="toolStartScript.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAACjSURBVDhPY0AG3759O//lyxcDKJd0ADTgPxC///79ewJU
-        iDQAMiBmXsT/ey/v/f/69ev89+/fC0CliAMgAyy6TP67THT4v/vKTpBrSPMSzAAY7t7ZSZqX0A0AYZK8
-        hM0AECbaS7gMgGGCXiJkQP3mWvIMAHlh/bm15HkBFIiXHl0iLxBBTn7+4jnp0Ui0k9EByACSnIwOQAYA
-        MUWZicTszMAAALbwKJKIpc1tAAAAAElFTkSuQmCC
-</value>
-  </data>
-  <data name="toolStopScript.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAAApSURBVDhPYxhm4Nu3b/+JwVDlmAAkuVCNFy8eNWBkGEAM
-        hiofHoCBAQDLogB0oo6ceAAAAABJRU5ErkJggg==
-</value>
-  </data>
-  <data name="toolRemove.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAADySURBVDhPlZExDoIwGIV7Aa/h7OjMLHdw8AaegYO46Qg6
-        aoyLsaM6OhvCBgmBseY1PPK31iAveelf6Pv+v6Dqup41TVPCqP29GhIOXtYrA6Mu83eVLub9fhBSFblB
-        YDOd2BBrrFrrYUjbtksJYTjdbU0URSZJEgeC1QFiw7EJwCRZln0BYNTOVDJsO3c1IN0VHAPoTEUAfDzs
-        zV3fbC2nCJmQ/grX88m+iOPYvJ6PviOesXMQAPFu/ni/APKMBUCEyBcSAIsGBn/PBqUQlFQf4EHcCUIi
-        IGRCuqNhsSuMwGgAxG8jAX9fgZKQ0WGKEDes1Ae/1AEPPV0vLAAAAABJRU5ErkJggg==
-</value>
-  </data>
 </root>

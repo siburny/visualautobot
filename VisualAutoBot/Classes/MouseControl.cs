@@ -12,30 +12,6 @@ namespace VisualAutoBot
 {
     class MouseControl
     {
-        [Flags]
-        public enum MouseEventFlags
-        {
-            LeftDown = 0x00000002,
-            LeftUp = 0x00000004,
-            MiddleDown = 0x00000020,
-            MiddleUp = 0x00000040,
-            Move = 0x00000001,
-            Absolute = 0x00008000,
-            RightDown = 0x00000008,
-            RightUp = 0x00000010
-        }
-
-        [DllImport("user32.dll", EntryPoint = "SetCursorPos")]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        private static extern bool SetCursorPos(int x, int y);
-
-        [DllImport("user32.dll")]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        private static extern bool GetCursorPos(out MousePoint lpMousePoint);
-
-        [DllImport("user32.dll")]
-        private static extern void mouse_event(int dwFlags, int dx, int dy, int dwData, int dwExtraInfo);
-
         static void SetCursorPosition(int x, int y)
         {
             SetCursorPos(x, y);
@@ -67,7 +43,7 @@ namespace VisualAutoBot
                 ;
         }
 
-        const int SPEED = 200;
+        const int SPEED = 250;
         const int STEPS = 25;
         public static void Click(int x, int y)
         {
@@ -81,14 +57,14 @@ namespace VisualAutoBot
             t.Elapsed += (sender, args) =>
             {
                 SetCursorPosition((int)(start.X + dx * i), (int)(start.Y + dy * i));
-                if(i++ == STEPS)
+                if (i++ == STEPS)
                 {
                     t.Stop();
                 }
             };
             t.Start();
 
-            while(t.Enabled)
+            while (t.Enabled)
             {
                 Application.DoEvents();
             }
@@ -96,6 +72,30 @@ namespace VisualAutoBot
 
             //MouseEvent(MouseEventFlags.LeftDown | MouseEventFlags.LeftUp);
         }
+
+        [Flags]
+        public enum MouseEventFlags
+        {
+            LeftDown = 0x00000002,
+            LeftUp = 0x00000004,
+            MiddleDown = 0x00000020,
+            MiddleUp = 0x00000040,
+            Move = 0x00000001,
+            Absolute = 0x00008000,
+            RightDown = 0x00000008,
+            RightUp = 0x00000010
+        }
+
+        [DllImport("user32.dll", EntryPoint = "SetCursorPos")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        private static extern bool SetCursorPos(int x, int y);
+
+        [DllImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        private static extern bool GetCursorPos(out MousePoint lpMousePoint);
+
+        [DllImport("user32.dll")]
+        private static extern void mouse_event(int dwFlags, int dx, int dy, int dwData, int dwExtraInfo);
 
         [StructLayout(LayoutKind.Sequential)]
         struct MousePoint

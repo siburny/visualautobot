@@ -52,6 +52,7 @@ namespace VisualAutoBot
             this.programTreeView.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.programTreeView.Name = "programTreeView";
             this.programTreeView.PathSeparator = "::";
+            this.programTreeView.ShowNodeToolTips = true;
             this.programTreeView.ShowRootLines = false;
             this.programTreeView.Size = new System.Drawing.Size(556, 1537);
             this.programTreeView.TabIndex = 0;

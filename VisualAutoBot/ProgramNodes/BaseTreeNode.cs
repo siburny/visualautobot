@@ -105,9 +105,29 @@ namespace VisualAutoBot.ProgramNodes
         {
             BackColor = Color.LightGreen;
 
-            Execute();
+            try
+            {
+                Execute();
+            }
+            catch(ScriptException e)
+            {
+                BackColor = Color.Red;
+                ToolTipText = e.Message;
+                throw;
+            }
 
             BackColor = Color.Empty;
+        }
+
+        public void ClearError()
+        {
+            ToolTipText = "";
+            BackColor = Color.Empty;
+
+            foreach(var node in Nodes)
+            {
+                (node as BaseTreeNode).ClearError();
+            }
         }
 
         private static Dictionary<string, object> _variables = new Dictionary<string, object>();

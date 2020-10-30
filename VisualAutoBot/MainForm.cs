@@ -15,6 +15,8 @@ namespace VisualAutoBot
     public partial class MainForm : Form
     {
         public bool IsRunning = false;
+        private static IntPtr GameWindowHandle;
+        private static RECT GameWindowPosition;
 
         public MainForm()
         {
@@ -140,23 +142,26 @@ namespace VisualAutoBot
 
         private void programTreeView_MouseDown(object sender, MouseEventArgs e)
         {
-            var hit = programTreeView.HitTest(e.X, e.Y);
+            if (e.Button == MouseButtons.Left)
+            {
+                var hit = programTreeView.HitTest(e.X, e.Y);
 
-            if (hit.Node == null)
-            {
-                programTreeView.SelectedNode = null;
-            }
-            else
-            {
-                if (hit.Node.IsSelected)
+                if (hit.Node == null)
                 {
-                    CancelButton_Click(this, null);
+                    programTreeView.SelectedNode = null;
                 }
                 else
                 {
-                    clickedNode = hit.Node;
-                }
+                    if (hit.Node.IsSelected)
+                    {
+                        CancelButton_Click(this, null);
+                    }
+                    else
+                    {
+                        clickedNode = hit.Node;
+                    }
 
+                }
             }
         }
 
@@ -324,6 +329,11 @@ namespace VisualAutoBot
             toolStartScript.Enabled = false;
             toolStopScript.Enabled = true;
 
+            foreach (var node in programTreeView.Nodes)
+            {
+                (node as BaseTreeNode).ClearError();
+            }
+
             Thread runner = new Thread(ScriptRunner);
             runner.Start();
         }
@@ -358,13 +368,21 @@ namespace VisualAutoBot
         {
             while (true)
             {
-                var start = programTreeView.Nodes[0] as LoopTreeNode;
-
-                foreach(var node in start.Nodes)
+                try
                 {
-                    if (SignalToExit) break;
-                    
-                    (node as BaseTreeNode).Run();
+                    (programTreeView.Nodes[0] as LoopTreeNode).Run();
+                }
+                catch(ScriptException e)
+                {
+                    if (e.IsFatal)
+                    {
+                        SignalToExit = true;
+                    }
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show("Exception Throw", e.Message);
+                    SignalToExit = true;
                 }
 
                 if (SignalToExit) break;
