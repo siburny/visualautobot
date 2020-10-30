@@ -36,11 +36,10 @@ namespace VisualAutoBot
             this.panelEditNode = new System.Windows.Forms.FlowLayoutPanel();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolAddNode = new System.Windows.Forms.ToolStripButton();
-            this.toolMoveUp = new System.Windows.Forms.ToolStripButton();
-            this.toolMoveDown = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStartScript = new System.Windows.Forms.ToolStripButton();
             this.toolStopScript = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolRemove = new System.Windows.Forms.ToolStripButton();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -84,9 +83,8 @@ namespace VisualAutoBot
             this.toolStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolAddNode,
-            this.toolMoveUp,
-            this.toolMoveDown,
-            this.toolStripSeparator1,
+            this.toolRemove,
+            this.toolStripSeparator2,
             this.toolStartScript,
             this.toolStopScript});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
@@ -103,29 +101,6 @@ namespace VisualAutoBot
             this.toolAddNode.Size = new System.Drawing.Size(65, 28);
             this.toolAddNode.Text = "Add";
             this.toolAddNode.Click += new System.EventHandler(this.toolAddNode_Click);
-            // 
-            // toolMoveUp
-            // 
-            this.toolMoveUp.Image = ((System.Drawing.Image)(resources.GetObject("toolMoveUp.Image")));
-            this.toolMoveUp.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolMoveUp.Name = "toolMoveUp";
-            this.toolMoveUp.Size = new System.Drawing.Size(56, 28);
-            this.toolMoveUp.Text = "Up";
-            this.toolMoveUp.Click += new System.EventHandler(this.toolMoveUp_Click);
-            // 
-            // toolMoveDown
-            // 
-            this.toolMoveDown.Image = ((System.Drawing.Image)(resources.GetObject("toolMoveDown.Image")));
-            this.toolMoveDown.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolMoveDown.Name = "toolMoveDown";
-            this.toolMoveDown.Size = new System.Drawing.Size(76, 28);
-            this.toolMoveDown.Text = "Down";
-            this.toolMoveDown.Click += new System.EventHandler(this.toolMoveDown_Click);
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 31);
             // 
             // toolStartScript
             // 
@@ -145,6 +120,20 @@ namespace VisualAutoBot
             this.toolStopScript.Size = new System.Drawing.Size(68, 28);
             this.toolStopScript.Text = "Stop";
             this.toolStopScript.Click += new System.EventHandler(this.toolStopScript_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 31);
+            // 
+            // toolRemove
+            // 
+            this.toolRemove.Image = ((System.Drawing.Image)(resources.GetObject("toolRemove.Image")));
+            this.toolRemove.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolRemove.Name = "toolRemove";
+            this.toolRemove.Size = new System.Drawing.Size(81, 28);
+            this.toolRemove.Text = "Delete";
+            this.toolRemove.Click += new System.EventHandler(this.toolRemove_Click);
             // 
             // MainForm
             // 
@@ -175,10 +164,9 @@ namespace VisualAutoBot
         internal System.Windows.Forms.FlowLayoutPanel panelEditNode;
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripButton toolAddNode;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton toolStartScript;
         private System.Windows.Forms.ToolStripButton toolStopScript;
-        private System.Windows.Forms.ToolStripButton toolMoveUp;
-        private System.Windows.Forms.ToolStripButton toolMoveDown;
+        private System.Windows.Forms.ToolStripButton toolRemove;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
     }
 }

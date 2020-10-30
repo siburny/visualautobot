@@ -33,7 +33,7 @@ namespace VisualAutoBot.ProgramNodes
             {
                 foreach(JObject obj in json["Nodes"])
                 {
-                    CreateNode(obj, Nodes);
+                    Create(obj, Nodes);
                 }
             }
         }

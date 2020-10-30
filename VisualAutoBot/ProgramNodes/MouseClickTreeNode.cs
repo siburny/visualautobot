@@ -10,13 +10,14 @@ using System.Windows.Forms;
 
 namespace VisualAutoBot.ProgramNodes
 {
-    class WaitTreeNode : BaseTreeNode
+    class MouseClickTreeNode : BaseTreeNode
     {
-        public WaitTreeNode()
+        public MouseClickTreeNode()
         {
-            NodeText = "Delay";
+            NodeText = "MouseClick";
 
-            Parameters.Add("Delay", 0);
+            Parameters.Add("X", 0);
+            Parameters.Add("Y", 0);
         }
 
         public override void Save(Dictionary<string, object> _data)
@@ -31,8 +32,6 @@ namespace VisualAutoBot.ProgramNodes
                 {
                     _data["Delay"] = 0;
                 }
-
-                Text = NodeText + " (" + (res == 0 ? "no delay" : res.ToString() + " ms") + ")";
             }
 
             base.Save(_data);
@@ -40,15 +39,17 @@ namespace VisualAutoBot.ProgramNodes
 
         public override void Refresh()
         {
-            int res = Convert.ToInt32(Parameters["Delay"]);
-            Text = NodeText + " (" + (res == 0 ? "no delay" : res.ToString() + " ms") + ")";
+            int x = Convert.ToInt32(Parameters["X"]),
+                y = Convert.ToInt32(Parameters["Y"]);
+            Text = $"{NodeText} ({x}, {y})";
         }
 
         public override void Execute()
         {
-            int ms = Convert.ToInt32(Parameters["Delay"]);
+            int x = Convert.ToInt32(Parameters["X"]),
+                y = Convert.ToInt32(Parameters["Y"]);
 
-            Thread.Sleep(ms);
+            MouseControl.Click(x, y);
         }
     }
 }

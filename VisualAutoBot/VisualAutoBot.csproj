@@ -34,6 +34,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="HotkeyListener, Version=1.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\HotkeyListener.1.8.0\lib\HotkeyListener.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -53,12 +56,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\MouseControl.cs" />
     <Compile Include="CustomDialog.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ProgramNodes\IRunnableTreeNode.cs" />
     <Compile Include="ProgramNodes\BaseTreeNode.cs" />
     <Compile Include="ProgramNodes\CalcTreeNode.cs" />
+    <Compile Include="ProgramNodes\MouseClickTreeNode.cs" />
     <Compile Include="ProgramNodes\WaitTreeNode.cs" />
     <Compile Include="ProgramNodes\ScreenshotTreeNode.cs" />
     <Compile Include="ProgramNodes\LoopTreeNode.cs" />
@@ -70,8 +75,6 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Script.cs" />
-    <Compile Include="Settings.cs" />
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -99,5 +102,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

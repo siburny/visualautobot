@@ -26,6 +26,7 @@ namespace VisualAutoBot.ProgramNodes
             { "WaitTreeNode", typeof(WaitTreeNode) },
             { "CalcTreeNode", typeof(CalcTreeNode) },
             { "ScreenshotTreeNode", typeof(ScreenshotTreeNode) },
+            { "MouseClickTreeNode", typeof(MouseClickTreeNode) },
         };
 
         internal Dictionary<string, object> Parameters = new Dictionary<string, object>();
@@ -47,7 +48,7 @@ namespace VisualAutoBot.ProgramNodes
             Refresh();
         }
 
-        internal static void CreateNode(JObject json, TreeNodeCollection nodes)
+        internal static void Create(JObject json, TreeNodeCollection nodes)
         {
             if (!json.ContainsKey("Type"))
             {
@@ -107,6 +108,35 @@ namespace VisualAutoBot.ProgramNodes
             Execute();
 
             BackColor = Color.Empty;
+        }
+
+        private static Dictionary<string, object> _variables = new Dictionary<string, object>();
+        public static object GetVariable(string name)
+        {
+            if (_variables.ContainsKey(name))
+            {
+                return _variables[name];
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public static void SetVariable(string name, object value)
+        {
+            if (_variables.ContainsKey(name))
+            {
+                if (_variables[name] != null && _variables[name] is IDisposable)
+                {
+                    (_variables[name] as IDisposable).Dispose();
+                }
+                _variables[name] = value;
+            }
+            else
+            {
+                _variables.Add(name, value);
+            }
         }
     }
 }

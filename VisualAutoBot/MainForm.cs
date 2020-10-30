@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
 using VisualAutoBot.ProgramNodes;
+using WK.Libraries.HotkeyListenerNS;
 
 namespace VisualAutoBot
 {
@@ -22,6 +23,32 @@ namespace VisualAutoBot
             EnsureLoopNode();
 
             LoadScript();
+
+            SetupHotKeys();
+        }
+
+        HotkeyListener _hotkeyListener = new HotkeyListener();
+        Hotkey _startStopHotkey;
+        private void SetupHotKeys()
+        {
+            _startStopHotkey = new Hotkey(Keys.Control, Keys.F8);
+            _hotkeyListener.Add(_startStopHotkey);
+            _hotkeyListener.HotkeyPressed += _hotkeyListener_HotkeyPressed;
+        }
+
+        private void _hotkeyListener_HotkeyPressed(object sender, HotkeyEventArgs e)
+        {
+            if(e.Hotkey == _startStopHotkey)
+            {
+                if(IsRunning)
+                {
+                    toolStopScript.PerformClick();
+                }
+                else
+                {
+                    toolStartScript.PerformClick();
+                }
+            }
         }
 
         private void EnsureLoopNode()
@@ -49,6 +76,14 @@ namespace VisualAutoBot
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
+            if(IsRunning)
+            {
+                MessageBox.Show("Please stop the script first");
+                e.Cancel = true;
+
+                return;
+            }
+
             var settings = Properties.Settings.Default;
             settings.WindowStates.Save(this);
             settings.Save();
@@ -71,7 +106,7 @@ namespace VisualAutoBot
             {
                 foreach(JObject obj in json)
                 {
-                    BaseTreeNode.CreateNode(obj, programTreeView.Nodes);
+                    BaseTreeNode.Create(obj, programTreeView.Nodes);
                 }
             }
             programTreeView.ExpandAll();
@@ -305,20 +340,15 @@ namespace VisualAutoBot
             toolStopScript.Enabled = false;
         }
 
-        private void toolMoveUp_Click(object sender, EventArgs e)
+        private void toolRemove_Click(object sender, EventArgs e)
         {
-            if (clickedNode == null)
+            if(clickedNode == null)
             {
                 return;
             }
-        }
 
-        private void toolMoveDown_Click(object sender, EventArgs e)
-        {
-            if (clickedNode == null)
-            {
-                return;
-            }
+            clickedNode.Remove();
+            CancelButton_Click(this, null);
         }
 
         #endregion
