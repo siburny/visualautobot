@@ -15,14 +15,15 @@ namespace VisualAutoBot.ProgramNodes
             NodeText = "Loop";
 
             Parameters.Add("WindowName", "TrainStation - Pixel");
+            SetVariable("WindowName", "TrainStation - Pixel");
         }
 
         public override void Execute()
         {
             var window = ScreenUtilities.GetWindowByName(Parameters["WindowName"].ToString());
-            if(window == default(IntPtr))
+            if(window == default)
             {
-                throw new ScriptException($"Cannot find game window: {Parameters["WindowName"].ToString()}", this);
+                throw new ScriptException($"Cannot find game window: {Parameters["WindowName"]}", this);
             }
             
             SetVariable("WindowHandle", window);
@@ -32,6 +33,11 @@ namespace VisualAutoBot.ProgramNodes
                 //if (SignalToExit) break;
                 (node as BaseTreeNode).Run();
             }
+        }
+
+        public override void Refresh()
+        {
+            SetVariable("WindowName", Parameters["WindowName"]);
         }
 
         public override void FromJSON(JObject json)

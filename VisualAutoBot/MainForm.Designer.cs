@@ -36,10 +36,10 @@ namespace VisualAutoBot
             this.panelEditNode = new System.Windows.Forms.FlowLayoutPanel();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolAddNode = new System.Windows.Forms.ToolStripButton();
+            this.toolRemove = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStartScript = new System.Windows.Forms.ToolStripButton();
             this.toolStopScript = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolRemove = new System.Windows.Forms.ToolStripButton();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -48,13 +48,13 @@ namespace VisualAutoBot
             this.programTreeView.AllowDrop = true;
             this.programTreeView.FullRowSelect = true;
             this.programTreeView.HideSelection = false;
-            this.programTreeView.Location = new System.Drawing.Point(18, 60);
+            this.programTreeView.Location = new System.Drawing.Point(0, 36);
             this.programTreeView.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.programTreeView.Name = "programTreeView";
             this.programTreeView.PathSeparator = "::";
             this.programTreeView.ShowNodeToolTips = true;
             this.programTreeView.ShowRootLines = false;
-            this.programTreeView.Size = new System.Drawing.Size(556, 1537);
+            this.programTreeView.Size = new System.Drawing.Size(556, 1629);
             this.programTreeView.TabIndex = 0;
             this.programTreeView.TabStop = false;
             this.programTreeView.BeforeCollapse += new System.Windows.Forms.TreeViewCancelEventHandler(this.programTreeView_BeforeCollapse);
@@ -74,9 +74,9 @@ namespace VisualAutoBot
             // 
             // panelEditNode
             // 
-            this.panelEditNode.Location = new System.Drawing.Point(590, 60);
+            this.panelEditNode.Location = new System.Drawing.Point(563, 36);
             this.panelEditNode.Name = "panelEditNode";
-            this.panelEditNode.Size = new System.Drawing.Size(806, 346);
+            this.panelEditNode.Size = new System.Drawing.Size(854, 346);
             this.panelEditNode.TabIndex = 2;
             // 
             // toolStrip1
@@ -103,6 +103,20 @@ namespace VisualAutoBot
             this.toolAddNode.Text = "Add";
             this.toolAddNode.Click += new System.EventHandler(this.toolAddNode_Click);
             // 
+            // toolRemove
+            // 
+            this.toolRemove.Image = ((System.Drawing.Image)(resources.GetObject("toolRemove.Image")));
+            this.toolRemove.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolRemove.Name = "toolRemove";
+            this.toolRemove.Size = new System.Drawing.Size(81, 28);
+            this.toolRemove.Text = "Delete";
+            this.toolRemove.Click += new System.EventHandler(this.toolRemove_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 31);
+            // 
             // toolStartScript
             // 
             this.toolStartScript.Image = ((System.Drawing.Image)(resources.GetObject("toolStartScript.Image")));
@@ -122,25 +136,11 @@ namespace VisualAutoBot
             this.toolStopScript.Text = "Stop";
             this.toolStopScript.Click += new System.EventHandler(this.toolStopScript_Click);
             // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 31);
-            // 
-            // toolRemove
-            // 
-            this.toolRemove.Image = ((System.Drawing.Image)(resources.GetObject("toolRemove.Image")));
-            this.toolRemove.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolRemove.Name = "toolRemove";
-            this.toolRemove.Size = new System.Drawing.Size(81, 28);
-            this.toolRemove.Text = "Delete";
-            this.toolRemove.Click += new System.EventHandler(this.toolRemove_Click);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(2058, 1670);
+            this.ClientSize = new System.Drawing.Size(2058, 1665);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.panelEditNode);
             this.Controls.Add(this.buttonAddNode);

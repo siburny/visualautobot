@@ -20,32 +20,35 @@ namespace VisualAutoBot
         /// </summary>
         /// <param name="handle">The handle to the window. (In windows forms, this is obtained by the Handle property)</param>
         /// <returns></returns>
+        /// 
         public static Bitmap CaptureWindow(IntPtr handle)
         {
-            // get te hDC of the target window
+            RECT rect = new RECT();
+            GetWindowRect(handle, ref rect);
+
+            return CaptureWindow(handle, rect);
+        }
+
+        public static Bitmap CaptureWindow(IntPtr handle, RECT rect)
+        {
             IntPtr hdcSrc = GetWindowDC(handle);
-            // get the size
-            RECT windowRect = new RECT();
-            GetWindowRect(handle, ref windowRect);
-            int width = windowRect.right - windowRect.left;
-            int height = windowRect.bottom - windowRect.top;
-            // create a device context we can copy to
+
+            int width = rect.right - rect.left;
+            int height = rect.bottom - rect.top;
+
             IntPtr hdcDest = CreateCompatibleDC(hdcSrc);
-            // create a bitmap we can copy it to,
-            // using GetDeviceCaps to get the width/height
             IntPtr hBitmap = CreateCompatibleBitmap(hdcSrc, width, height);
-            // select the bitmap object
             IntPtr hOld = SelectObject(hdcDest, hBitmap);
-            // bitblt over
+
             BitBlt(hdcDest, 0, 0, width, height, hdcSrc, 0, 0, SRCCOPY);
-            // restore selection
+
             SelectObject(hdcDest, hOld);
-            // clean up 
+
             DeleteDC(hdcDest);
             ReleaseDC(handle, hdcSrc);
-            // get a .NET image object for it
+
             Bitmap img = Bitmap.FromHbitmap(hBitmap);
-            // free up the Bitmap object
+
             DeleteObject(hBitmap);
             return img;
         }

@@ -37,8 +37,8 @@
             this.PictureBoxOutput.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PictureBoxOutput.Location = new System.Drawing.Point(0, 0);
             this.PictureBoxOutput.Name = "PictureBoxOutput";
-            this.PictureBoxOutput.Size = new System.Drawing.Size(1343, 1152);
-            this.PictureBoxOutput.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.PictureBoxOutput.Size = new System.Drawing.Size(1836, 1420);
+            this.PictureBoxOutput.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.PictureBoxOutput.TabIndex = 0;
             this.PictureBoxOutput.TabStop = false;
             // 
@@ -46,7 +46,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1343, 1152);
+            this.ClientSize = new System.Drawing.Size(1836, 1420);
             this.Controls.Add(this.PictureBoxOutput);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.KeyPreview = true;
@@ -60,7 +60,6 @@
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ScreenshotPreviewDialog_KeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.PictureBoxOutput)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
