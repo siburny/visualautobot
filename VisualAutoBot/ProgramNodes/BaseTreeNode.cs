@@ -27,6 +27,7 @@ namespace VisualAutoBot.ProgramNodes
             { "CalcTreeNode", typeof(CalcTreeNode) },
             { "ScreenshotTreeNode", typeof(ScreenshotTreeNode) },
             { "MouseClickTreeNode", typeof(MouseClickTreeNode) },
+            { "MatchTemplateTreeNode", typeof(MatchTemplateTreeNode) },
         };
 
         internal Dictionary<string, object> Parameters = new Dictionary<string, object>();
@@ -101,9 +102,12 @@ namespace VisualAutoBot.ProgramNodes
 
         public abstract void Execute();
 
-        public void Run()
+        public void Run(bool highlight = true)
         {
-            BackColor = Color.LightGreen;
+            if (highlight)
+            {
+                BackColor = Color.LightGreen;
+            }
 
             try
             {
@@ -116,7 +120,10 @@ namespace VisualAutoBot.ProgramNodes
                 throw;
             }
 
-            BackColor = Color.Empty;
+            if (highlight)
+            {
+                BackColor = Color.Empty;
+            }
         }
 
         public void ClearError()
@@ -157,6 +164,11 @@ namespace VisualAutoBot.ProgramNodes
             {
                 _variables.Add(name, value);
             }
+        }
+
+        public static bool VariableExists(string name)
+        {
+            return _variables.ContainsKey(name);
         }
     }
 }

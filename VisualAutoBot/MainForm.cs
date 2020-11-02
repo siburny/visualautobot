@@ -15,8 +15,6 @@ namespace VisualAutoBot
     public partial class MainForm : Form
     {
         public bool IsRunning = false;
-        private static IntPtr GameWindowHandle;
-        private static RECT GameWindowPosition;
 
         public MainForm()
         {
@@ -370,7 +368,7 @@ namespace VisualAutoBot
             {
                 try
                 {
-                    (programTreeView.Nodes[0] as LoopTreeNode).Run();
+                    (programTreeView.Nodes[0] as LoopTreeNode).Run(false);
                 }
                 catch(ScriptException e)
                 {

@@ -21,16 +21,19 @@ namespace VisualAutoBot
         /// <param name="handle">The handle to the window. (In windows forms, this is obtained by the Handle property)</param>
         /// <returns></returns>
         /// 
-        public static Bitmap CaptureWindow(IntPtr handle)
+        /*public static Bitmap CaptureWindow(IntPtr handle)
         {
             RECT rect = new RECT();
             GetWindowRect(handle, ref rect);
 
             return CaptureWindow(handle, rect);
-        }
+        }*/
 
-        public static Bitmap CaptureWindow(IntPtr handle, RECT rect)
+        public static Bitmap CaptureWindow(IntPtr handle/*, RECT rect*/)
         {
+            RECT rect = new RECT();
+            GetWindowRect(handle, ref rect);
+
             IntPtr hdcSrc = GetWindowDC(handle);
 
             int width = rect.right - rect.left;
@@ -40,7 +43,7 @@ namespace VisualAutoBot
             IntPtr hBitmap = CreateCompatibleBitmap(hdcSrc, width, height);
             IntPtr hOld = SelectObject(hdcDest, hBitmap);
 
-            BitBlt(hdcDest, 0, 0, width, height, hdcSrc, 0, 0, SRCCOPY);
+            BitBlt(hdcDest, 0, 0, width, height, hdcSrc, rect.left, rect.top, SRCCOPY);
 
             SelectObject(hdcDest, hOld);
 
