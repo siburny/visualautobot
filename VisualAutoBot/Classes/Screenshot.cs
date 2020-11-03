@@ -10,7 +10,7 @@ namespace VisualAutoBot
 
     public static class ScreenUtilities
     {
-        public static Image CaptureScreen()
+        public static Bitmap CaptureScreen()
         {
             return CaptureWindow(GetDesktopWindow());
         }
@@ -29,11 +29,32 @@ namespace VisualAutoBot
             return CaptureWindow(handle, rect);
         }*/
 
-        public static Bitmap CaptureWindow(IntPtr handle/*, RECT rect*/)
+        public static Bitmap CaptureScreenWindow(string name)
+        {
+            var window = ScreenUtilities.GetWindowByName(name);
+
+            if(window == default)
+            {
+                return null;
+            }
+            
+            RECT rect = new RECT();
+            GetWindowRect(window, ref rect);
+
+            return CaptureWindow(GetDesktopWindow(), rect);
+        }
+
+        public static Bitmap CaptureWindow(IntPtr handle)
         {
             RECT rect = new RECT();
+            
             GetWindowRect(handle, ref rect);
 
+            return CaptureWindow(handle, rect);
+        }
+
+        public static Bitmap CaptureWindow(IntPtr handle, RECT rect)
+        {
             IntPtr hdcSrc = GetWindowDC(handle);
 
             int width = rect.right - rect.left;

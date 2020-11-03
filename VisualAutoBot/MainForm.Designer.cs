@@ -46,6 +46,8 @@ namespace VisualAutoBot
             // programTreeView
             // 
             this.programTreeView.AllowDrop = true;
+            this.programTreeView.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.programTreeView.FullRowSelect = true;
             this.programTreeView.HideSelection = false;
             this.programTreeView.Location = new System.Drawing.Point(0, 36);
@@ -74,9 +76,12 @@ namespace VisualAutoBot
             // 
             // panelEditNode
             // 
-            this.panelEditNode.Location = new System.Drawing.Point(563, 36);
+            this.panelEditNode.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panelEditNode.Location = new System.Drawing.Point(575, 36);
             this.panelEditNode.Name = "panelEditNode";
-            this.panelEditNode.Size = new System.Drawing.Size(854, 346);
+            this.panelEditNode.Size = new System.Drawing.Size(842, 1629);
             this.panelEditNode.TabIndex = 2;
             // 
             // toolStrip1

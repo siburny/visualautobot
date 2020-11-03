@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -175,22 +176,39 @@ namespace VisualAutoBot
                 {
                     foreach (var item in node.Parameters)
                     {
-                        var label = new Label()
+                        if (item.Value != null)
                         {
-                            AutoSize = true,
-                            Text = item.Key + ":"
-                        };
+                            var label = new Label()
+                            {
+                                AutoSize = true,
+                                Text = item.Key + ":"
+                            };
+                            panelEditNode.Controls.Add(label);
 
-                        var edit = new TextBox()
-                        {
-                            Text = item.Value.ToString(),
-                            Width = panelEditNode.Width - 10,
-                            Tag = item.Key,
-                        };
-                        edit.Margin = new Padding(edit.Margin.Left, edit.Margin.Top, edit.Margin.Right, 15);
 
-                        panelEditNode.Controls.Add(label);
-                        panelEditNode.Controls.Add(edit);
+                            if (item.Value is Bitmap bitmap)
+                            {
+                                var pictureBox = new PictureBox()
+                                {
+                                    Width = panelEditNode.Width - 10,
+                                    Height = 200,
+                                    SizeMode = PictureBoxSizeMode.Normal,
+                                    Image = bitmap,
+                                };
+                                panelEditNode.Controls.Add(pictureBox);
+                            }
+                            else
+                            {
+                                var edit = new TextBox()
+                                {
+                                    Text = item.Value.ToString(),
+                                    Width = panelEditNode.Width - 10,
+                                    Tag = item.Key,
+                                };
+                                edit.Margin = new Padding(edit.Margin.Left, edit.Margin.Top, edit.Margin.Right, 15);
+                                panelEditNode.Controls.Add(edit);
+                            }
+                        }
                     }
 
                     var saveButton = new Button()

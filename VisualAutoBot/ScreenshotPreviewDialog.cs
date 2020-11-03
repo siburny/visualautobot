@@ -12,29 +12,42 @@ namespace VisualAutoBot
 {
     public partial class ScreenshotPreviewDialog : Form
     {
+        private Bitmap _bitmap;
+        public Bitmap Template = null;
+
         public ScreenshotPreviewDialog()
         {
             InitializeComponent();
         }
 
-        public void ShowDialog(Bitmap bitmap)
+        public DialogResult ShowDialog(Bitmap bitmap, bool allowSelection = false)
         {
-            PictureBoxOutput.Image = bitmap;
+            PictureBoxOutput.Image = _bitmap = bitmap;
+            PictureBoxOutput.SelectionRegion = new RectangleF(0, 0, 0, 0);
+            PictureBoxOutput.SelectionMode = allowSelection 
+                ? Cyotek.Windows.Forms.ImageBoxSelectionMode.Rectangle 
+                : Cyotek.Windows.Forms.ImageBoxSelectionMode.None;
 
-            base.ShowDialog();
+            return ShowDialog();
         }
 
         private void ScreenshotPreviewDialog_KeyDown(object sender, KeyEventArgs e)
         {
             if(e.KeyCode == Keys.Escape)
             {
-
+                DialogResult = DialogResult.Cancel;
             }
         }
 
-        private void ScreenshotPreviewDialog_Load(object sender, EventArgs e)
+        private void PictureBoxOutput_Selected(object sender, EventArgs e)
         {
+            PictureBoxMatchSelection.Image = _bitmap.Clone(PictureBoxOutput.SelectionRegion, System.Drawing.Imaging.PixelFormat.DontCare);
+        }
 
+        private void ButtonSaveSelection_Click(object sender, EventArgs e)
+        {
+            Template = new Bitmap(PictureBoxMatchSelection.Image);
+            DialogResult = DialogResult.OK;
         }
     }
 }

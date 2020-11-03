@@ -2,3 +2,4 @@
 VisualAutoBot/obj
 VisualAutoBot/bin
 packages
+*.user

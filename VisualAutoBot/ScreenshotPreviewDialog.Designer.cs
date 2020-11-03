@@ -28,25 +28,74 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.PictureBoxOutput = new System.Windows.Forms.PictureBox();
-            ((System.ComponentModel.ISupportInitialize)(this.PictureBoxOutput)).BeginInit();
+            this.PictureBoxOutput = new VisualAutoBot.ImageBoxEx();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.ButtonSaveSelection = new System.Windows.Forms.Button();
+            this.PictureBoxMatchSelection = new VisualAutoBot.ImageBoxEx();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // PictureBoxOutput
             // 
+            this.PictureBoxOutput.AlwaysShowHScroll = true;
+            this.PictureBoxOutput.AlwaysShowVScroll = true;
+            this.PictureBoxOutput.Cursor = System.Windows.Forms.Cursors.Cross;
             this.PictureBoxOutput.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.PictureBoxOutput.GridScale = Cyotek.Windows.Forms.ImageBoxGridScale.Medium;
             this.PictureBoxOutput.Location = new System.Drawing.Point(0, 0);
             this.PictureBoxOutput.Name = "PictureBoxOutput";
+            this.PictureBoxOutput.SelectionMode = Cyotek.Windows.Forms.ImageBoxSelectionMode.Rectangle;
             this.PictureBoxOutput.Size = new System.Drawing.Size(1836, 1420);
-            this.PictureBoxOutput.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.PictureBoxOutput.TabIndex = 0;
-            this.PictureBoxOutput.TabStop = false;
+            this.PictureBoxOutput.TextDisplayMode = Cyotek.Windows.Forms.ImageBoxGridDisplayMode.None;
+            this.PictureBoxOutput.SelectionMoved += new System.EventHandler(this.PictureBoxOutput_Selected);
+            this.PictureBoxOutput.SelectionResized += new System.EventHandler(this.PictureBoxOutput_Selected);
+            this.PictureBoxOutput.Selected += new System.EventHandler<System.EventArgs>(this.PictureBoxOutput_Selected);
+            // 
+            // panel1
+            // 
+            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.ButtonSaveSelection);
+            this.panel1.Controls.Add(this.PictureBoxMatchSelection);
+            this.panel1.Location = new System.Drawing.Point(1643, 1180);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(193, 240);
+            this.panel1.TabIndex = 2;
+            // 
+            // ButtonSaveSelection
+            // 
+            this.ButtonSaveSelection.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ButtonSaveSelection.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ButtonSaveSelection.Location = new System.Drawing.Point(-1, 188);
+            this.ButtonSaveSelection.Name = "ButtonSaveSelection";
+            this.ButtonSaveSelection.Size = new System.Drawing.Size(193, 54);
+            this.ButtonSaveSelection.TabIndex = 3;
+            this.ButtonSaveSelection.Text = "SELECT";
+            this.ButtonSaveSelection.UseVisualStyleBackColor = true;
+            this.ButtonSaveSelection.Click += new System.EventHandler(this.ButtonSaveSelection_Click);
+            // 
+            // PictureBoxMatchSelection
+            // 
+            this.PictureBoxMatchSelection.AllowZoom = false;
+            this.PictureBoxMatchSelection.AlwaysShowHScroll = true;
+            this.PictureBoxMatchSelection.AlwaysShowVScroll = true;
+            this.PictureBoxMatchSelection.AutoPan = false;
+            this.PictureBoxMatchSelection.AutoScroll = false;
+            this.PictureBoxMatchSelection.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.PictureBoxMatchSelection.GridScale = Cyotek.Windows.Forms.ImageBoxGridScale.Tiny;
+            this.PictureBoxMatchSelection.Location = new System.Drawing.Point(-1, -1);
+            this.PictureBoxMatchSelection.Name = "PictureBoxMatchSelection";
+            this.PictureBoxMatchSelection.Size = new System.Drawing.Size(192, 192);
+            this.PictureBoxMatchSelection.SizeMode = Cyotek.Windows.Forms.ImageBoxSizeMode.Fit;
+            this.PictureBoxMatchSelection.TabIndex = 2;
+            this.PictureBoxMatchSelection.TabStop = false;
             // 
             // ScreenshotPreviewDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1836, 1420);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.PictureBoxOutput);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.KeyPreview = true;
@@ -56,15 +105,17 @@
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Preview";
-            this.Load += new System.EventHandler(this.ScreenshotPreviewDialog_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ScreenshotPreviewDialog_KeyDown);
-            ((System.ComponentModel.ISupportInitialize)(this.PictureBoxOutput)).EndInit();
+            this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.PictureBox PictureBoxOutput;
+        private ImageBoxEx PictureBoxOutput;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Button ButtonSaveSelection;
+        private ImageBoxEx PictureBoxMatchSelection;
     }
 }

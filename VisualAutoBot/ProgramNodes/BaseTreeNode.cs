@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Windows.Forms;
 
 namespace VisualAutoBot.ProgramNodes
@@ -77,7 +79,17 @@ namespace VisualAutoBot.ProgramNodes
             {
                 if (Parameters.ContainsKey(param.Name))
                 {
-                    Parameters[param.Name] = (param.Value as JValue).Value;
+                    string value = (param.Value as JValue).Value.ToString();
+
+                    if (value.StartsWith("PNG:"))
+                    {
+                        MemoryStream m = new MemoryStream(Convert.FromBase64String(value.Substring(4)));
+                        Parameters[param.Name] = Bitmap.FromStream(m);
+                    }
+                    else
+                    {
+                        Parameters[param.Name] = (param.Value as JValue).Value;
+                    }
                 }
             }
 
@@ -91,9 +103,18 @@ namespace VisualAutoBot.ProgramNodes
             json.Add("Type", GetType().Name);
             foreach (var param in Parameters)
             {
-                json.Add(param.Key, new JValue(param.Value));
+                if (param.Value != null && param.Value is Bitmap)
+                {
+                    Bitmap bitmap = param.Value as Bitmap;
+                    MemoryStream m = new MemoryStream();
+                    bitmap.Save(m, ImageFormat.Png);
+                    json.Add(param.Key, new JValue("PNG:" + Convert.ToBase64String(m.ToArray())));
+                }
+                else
+                {
+                    json.Add(param.Key, new JValue(param.Value));
+                }
             }
-
 
             return json;
         }

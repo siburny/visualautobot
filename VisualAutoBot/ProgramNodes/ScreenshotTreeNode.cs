@@ -11,8 +11,6 @@ namespace VisualAutoBot.ProgramNodes
 {
     class ScreenshotTreeNode : BaseTreeNode
     {
-        ScreenshotPreviewDialog preview = new ScreenshotPreviewDialog();
-
         public ScreenshotTreeNode()
         {
             NodeText = "Screenshot";
@@ -44,6 +42,7 @@ namespace VisualAutoBot.ProgramNodes
 
             Bitmap bitmap = ScreenUtilities.CaptureWindow(window);
 
+            ScreenshotPreviewDialog preview = new ScreenshotPreviewDialog();
             preview.ShowDialog(bitmap);
         }
 

@@ -16,20 +16,69 @@ namespace VisualAutoBot.ProgramNodes
 {
     class MatchTemplateTreeNode : BaseTreeNode
     {
-        ScreenshotPreviewDialog preview = new ScreenshotPreviewDialog();
-
         public MatchTemplateTreeNode()
         {
             NodeText = "Match";
 
-            Parameters.Add("Variable", "screenshot");
+            Parameters.Add("Variable", "location");
             Parameters.Add("XY", "");
             Parameters.Add("WidthHeight", "");
+            Parameters.Add("Template", null);
 
-            MenuItem previewMenu = new MenuItem("Match Preview");
-            previewMenu.Click += PreviewMenu_Click;
+            MenuItem matchSelectionMenu = new MenuItem("Match Selection");
+            matchSelectionMenu.Click += PreviewMenu_Click;
 
-            ContextMenu = new ContextMenu(new MenuItem[] { previewMenu });
+            ContextMenu = new ContextMenu(new MenuItem[] { matchSelectionMenu });
+        }
+
+        private Mat GetMat(Bitmap bitmap)
+        {
+            Mat mat;
+
+            if (!string.IsNullOrEmpty(Parameters["XY"].ToString()))
+            {
+                string[] xy = Parameters["XY"].ToString().Split(',');
+                string[] widthheight = { "", "" };
+                if (Parameters["WidthHeight"].ToString() != "")
+                {
+                    widthheight = Parameters["WidthHeight"].ToString().Split(',');
+                }
+
+                int x = int.Parse(xy[0]),
+                    y = int.Parse(xy[1]),
+                    width,
+                    height;
+
+                if (widthheight[0] == "")
+                {
+                    width = bitmap.Width - x;
+                }
+                else
+                {
+                    width = int.Parse(widthheight[0]);
+                }
+
+                if (widthheight[1] == "")
+                {
+                    height = bitmap.Height - y;
+                }
+                else
+                {
+                    height = int.Parse(widthheight[1]);
+                }
+
+                Mat full = bitmap.ToMat();
+                mat = new Mat(full, new Rect(x, y, width, height));
+
+                //mat = new Mat();
+                //n.CopyTo(mat);
+            }
+            else
+            {
+                mat = bitmap.ToMat();
+            }
+
+            return mat;
         }
 
         private void PreviewMenu_Click(object sender, EventArgs e)
@@ -42,33 +91,29 @@ namespace VisualAutoBot.ProgramNodes
             }
 
 
-            IntPtr window = ScreenUtilities.GetWindowByName(name);
-            if (window == default)
+            Bitmap bitmap = ScreenUtilities.CaptureScreenWindow(name);
+            if (bitmap == null)
             {
                 MessageBox.Show($"Cannot find game window: {name}");
                 return;
             }
 
-            Bitmap bitmap = ScreenUtilities.CaptureWindow(window);
-            Mat mat = new Mat();
-
-            if (!string.IsNullOrEmpty(Parameters["XY"].ToString()) && !string.IsNullOrEmpty("WidthHeight"))
+            try
             {
-                string[] xy = Parameters["XY"].ToString().Split(','),
-                widthheight = Parameters["WidthHeight"].ToString().Split(',');
+                Mat mat = GetMat(bitmap);
 
-                Mat full = bitmap.ToMat();
-                Mat n = new Mat(full, new Rect(int.Parse(xy[0]), int.Parse(xy[1]), int.Parse(widthheight[0]), int.Parse(widthheight[1])));
-                n.CopyTo(mat);
+                ScreenshotPreviewDialog preview = new ScreenshotPreviewDialog();
+                DialogResult res = preview.ShowDialog(mat.ToBitmap(), true);
+
+                if (res == DialogResult.OK)
+                {
+                    Parameters["Template"] = preview.Template;
+                }
             }
-            else
+            catch (OpenCVException ex)
             {
-                mat = bitmap.ToMat();
+                MessageBox.Show(ex.Message, "OpenCV Exception");
             }
-
-
-
-            preview.ShowDialog(mat.ToBitmap());
         }
 
         public override void Save(Dictionary<string, object> _data)

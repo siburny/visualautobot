@@ -24,8 +24,7 @@ namespace VisualAutoBot
 
         static MousePoint GetCursorPosition()
         {
-            MousePoint currentMousePoint;
-            var gotPoint = GetCursorPos(out currentMousePoint);
+            var gotPoint = GetCursorPos(out MousePoint currentMousePoint);
             if (!gotPoint) { currentMousePoint = new MousePoint(0, 0); }
             return currentMousePoint;
         }
@@ -34,7 +33,7 @@ namespace VisualAutoBot
         {
             MousePoint position = GetCursorPosition();
 
-            mouse_event
+            MouseEvent
                 ((int)value,
                  position.X,
                  position.Y,
@@ -94,8 +93,8 @@ namespace VisualAutoBot
         [return: MarshalAs(UnmanagedType.Bool)]
         private static extern bool GetCursorPos(out MousePoint lpMousePoint);
 
-        [DllImport("user32.dll")]
-        private static extern void mouse_event(int dwFlags, int dx, int dy, int dwData, int dwExtraInfo);
+        [DllImport("user32.dll", EntryPoint = "mouse_event")]
+        private static extern void MouseEvent(int dwFlags, int dx, int dy, int dwData, int dwExtraInfo);
 
         [StructLayout(LayoutKind.Sequential)]
         struct MousePoint
