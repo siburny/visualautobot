@@ -23,12 +23,17 @@ namespace VisualAutoBot.ProgramNodes
             Parameters.Add("Variable", "location");
             Parameters.Add("XY", "");
             Parameters.Add("WidthHeight", "");
+            Parameters.Add("ClickOffset", "");
+            Parameters.Add("MatchValue", 0.95);
             Parameters.Add("Template", null);
 
             MenuItem matchSelectionMenu = new MenuItem("Match Selection");
-            matchSelectionMenu.Click += PreviewMenu_Click;
+            matchSelectionMenu.Click += MatchSelectionMenu_Click;
 
-            ContextMenu = new ContextMenu(new MenuItem[] { matchSelectionMenu });
+            MenuItem testMatchMenu = new MenuItem("Test Match");
+            testMatchMenu.Click += TestMatchMenu_Click;
+
+            ContextMenu = new ContextMenu(new MenuItem[] { matchSelectionMenu, testMatchMenu });
         }
 
         private Mat GetMat(Bitmap bitmap)
@@ -69,9 +74,6 @@ namespace VisualAutoBot.ProgramNodes
 
                 Mat full = bitmap.ToMat();
                 mat = new Mat(full, new Rect(x, y, width, height));
-
-                //mat = new Mat();
-                //n.CopyTo(mat);
             }
             else
             {
@@ -81,7 +83,7 @@ namespace VisualAutoBot.ProgramNodes
             return mat;
         }
 
-        private void PreviewMenu_Click(object sender, EventArgs e)
+        private void TestMatchMenu_Click(object sender, EventArgs e)
         {
             string name = GetVariable("WindowName").ToString();
             if (string.IsNullOrEmpty(name))
@@ -90,6 +92,57 @@ namespace VisualAutoBot.ProgramNodes
                 return;
             }
 
+            Bitmap bitmap = ScreenUtilities.CaptureScreenWindow(name);
+            if (bitmap == null)
+            {
+                MessageBox.Show($"Cannot find game window: {name}");
+                return;
+            }
+
+            if (Parameters["Template"] == null || !(Parameters["Template"] is Bitmap))
+            {
+                MessageBox.Show("Template is null or not Bitmap");
+                return;
+            }
+
+            try
+            {
+                Mat template = (Parameters["Template"] as Bitmap).ToMat().CvtColor(ColorConversionCodes.BGRA2BGR);
+                Mat mat = GetMat(bitmap);
+
+                using (Mat result = mat.MatchTemplate(template, TemplateMatchModes.CCoeffNormed))
+                {
+                    Cv2.MinMaxLoc(result, out _, out double maxValue, out _, out OpenCvSharp.Point maxLocation);
+
+                    if (maxValue > (double)Parameters["MatchValue"])
+                    {
+                        mat.Rectangle(new Rect(maxLocation.X, maxLocation.Y, template.Width, template.Height), Scalar.LightGreen, 3);
+                        mat.PutText(maxValue.ToString("0.##"), new OpenCvSharp.Point(maxLocation.X, maxLocation.Y), HersheyFonts.HersheyPlain, 2, Scalar.White, 3);
+                    }
+                    else if (maxValue > 0.5)
+                    {
+                        mat.Rectangle(new Rect(maxLocation.X, maxLocation.Y, template.Width, template.Height), Scalar.LightCoral, 3);
+                        mat.PutText(maxValue.ToString("0.##"), new OpenCvSharp.Point(maxLocation.X, maxLocation.Y), HersheyFonts.HersheyPlain, 2, Scalar.White, 3);
+                    }
+                }
+
+                ScreenshotPreviewDialog preview = new ScreenshotPreviewDialog();
+                DialogResult res = preview.ShowDialog(mat.ToBitmap());
+            }
+            catch (OpenCVException ex)
+            {
+                MessageBox.Show(ex.Message, "OpenCV Exception");
+            }
+        }
+
+        private void MatchSelectionMenu_Click(object sender, EventArgs e)
+        {
+            string name = GetVariable("WindowName").ToString();
+            if (string.IsNullOrEmpty(name))
+            {
+                MessageBox.Show("Can't find gamw window name.");
+                return;
+            }
 
             Bitmap bitmap = ScreenUtilities.CaptureScreenWindow(name);
             if (bitmap == null)
@@ -143,6 +196,18 @@ namespace VisualAutoBot.ProgramNodes
                 }
             }
 
+            if (_data.ContainsKey("MatchValue"))
+            {
+                if (double.TryParse(_data["MatchValue"].ToString(), out double res))
+                {
+                    _data["MatchValue"] = res;
+                }
+                else
+                {
+                    _data["MatchValue"] = 0.95;
+                }
+            }
+
             if (_data.ContainsKey("WidthHeight"))
             {
                 string[] str = _data["WidthHeight"].ToString().Split(',');
@@ -163,6 +228,26 @@ namespace VisualAutoBot.ProgramNodes
                 }
             }
 
+            if (_data.ContainsKey("ClickOffset"))
+            {
+                string[] str = _data["ClickOffset"].ToString().Split(',');
+                if (str.Length != 2)
+                {
+                    _data["ClickOffset"] = "";
+                }
+                else
+                {
+                    str[0] = str[0].Trim();
+                    str[1] = str[1].Trim();
+
+                    Regex regex = new Regex("^-?[0-9]+$");
+                    if (!regex.IsMatch(str[0]) || !regex.IsMatch(str[1]))
+                    {
+                        _data["ClickOffset"] = "";
+                    }
+                }
+            }
+
             base.Save(_data);
         }
 
@@ -173,41 +258,46 @@ namespace VisualAutoBot.ProgramNodes
 
         public override void Execute()
         {
-
-            return;
-            /*
-
-            if (GetVariable("screenshot") == null || !(GetVariable("screenshot") is Bitmap))
+            string name = GetVariable("WindowName").ToString();
+            if (string.IsNullOrEmpty(name))
             {
-
-                return;
+                throw new ScriptException("Can't find gamw window name.", this);
             }
-            Bitmap original = GetVariable("screenshot");
 
-
-            Bitmap bitmap;
-            if (!string.IsNullOrEmpty(Parameters["XY"].ToString()) && !string.IsNullOrEmpty("WidthHeight"))
+            Bitmap bitmap = ScreenUtilities.CaptureScreenWindow(name);
+            if (bitmap == null)
             {
-                string[] xy = Parameters["XY"].ToString().Split(','),
-                    widthheight = Parameters["WidthHeight"].ToString().Split(',');
+                throw new ScriptException($"Cannot find game window: {name}", this);
+            }
 
-                RECT rect = new RECT()
+            if (Parameters["Template"] == null || !(Parameters["Template"] is Bitmap))
+            {
+                throw new ScriptException("Template is null or not Bitmap", this);
+            }
+
+            try
+            {
+                using (Mat template = (Parameters["Template"] as Bitmap).ToMat().CvtColor(ColorConversionCodes.BGRA2BGR))
+                using (Mat mat = GetMat(bitmap))
+                using (Mat result = mat.MatchTemplate(template, TemplateMatchModes.CCoeffNormed))
                 {
-                    left = int.Parse(xy[0]),
-                    top = int.Parse(xy[1]),
-                };
+                    Cv2.MinMaxLoc(result, out _, out double maxValue, out _, out OpenCvSharp.Point maxLocation);
 
-                rect.right = rect.left + int.Parse(widthheight[0]);
-                rect.bottom = rect.top + int.Parse(widthheight[1]);
+                    if (maxValue > (double)Parameters["MatchValue"])
+                    {
+                        SetVariable("Location", new System.Drawing.Point(maxLocation.X, maxLocation.Y));
+                    }
+                    else 
+                    {
+                        SetVariable("Location", null);
+                    }
 
-                bitmap = ScreenUtilities.CaptureWindow(window, rect);
+                }
             }
-            else
+            catch (OpenCVException ex)
             {
-                bitmap = ScreenUtilities.CaptureWindow(window);
+                throw new ScriptException($"OpenCV Exception: ${ex.Message}", this);
             }
-
-            SetVariable(Parameters["Variable"].ToString(), bitmap);*/
         }
     }
 }

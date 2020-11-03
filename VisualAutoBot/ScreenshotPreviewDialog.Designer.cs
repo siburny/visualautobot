@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             this.PictureBoxOutput = new VisualAutoBot.ImageBoxEx();
-            this.panel1 = new System.Windows.Forms.Panel();
+            this.PanelMatchSelection = new System.Windows.Forms.Panel();
             this.ButtonSaveSelection = new System.Windows.Forms.Button();
             this.PictureBoxMatchSelection = new VisualAutoBot.ImageBoxEx();
-            this.panel1.SuspendLayout();
+            this.PanelMatchSelection.SuspendLayout();
             this.SuspendLayout();
             // 
             // PictureBoxOutput
@@ -52,15 +52,15 @@
             this.PictureBoxOutput.SelectionResized += new System.EventHandler(this.PictureBoxOutput_Selected);
             this.PictureBoxOutput.Selected += new System.EventHandler<System.EventArgs>(this.PictureBoxOutput_Selected);
             // 
-            // panel1
+            // PanelMatchSelection
             // 
-            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel1.Controls.Add(this.ButtonSaveSelection);
-            this.panel1.Controls.Add(this.PictureBoxMatchSelection);
-            this.panel1.Location = new System.Drawing.Point(1643, 1180);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(193, 240);
-            this.panel1.TabIndex = 2;
+            this.PanelMatchSelection.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.PanelMatchSelection.Controls.Add(this.ButtonSaveSelection);
+            this.PanelMatchSelection.Controls.Add(this.PictureBoxMatchSelection);
+            this.PanelMatchSelection.Location = new System.Drawing.Point(1643, 1180);
+            this.PanelMatchSelection.Name = "PanelMatchSelection";
+            this.PanelMatchSelection.Size = new System.Drawing.Size(193, 240);
+            this.PanelMatchSelection.TabIndex = 2;
             // 
             // ButtonSaveSelection
             // 
@@ -95,7 +95,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1836, 1420);
-            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.PanelMatchSelection);
             this.Controls.Add(this.PictureBoxOutput);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.KeyPreview = true;
@@ -106,7 +106,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Preview";
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ScreenshotPreviewDialog_KeyDown);
-            this.panel1.ResumeLayout(false);
+            this.PanelMatchSelection.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -114,7 +114,7 @@
         #endregion
 
         private ImageBoxEx PictureBoxOutput;
-        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Panel PanelMatchSelection;
         private System.Windows.Forms.Button ButtonSaveSelection;
         private ImageBoxEx PictureBoxMatchSelection;
     }

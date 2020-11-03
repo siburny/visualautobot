@@ -28,6 +28,8 @@ namespace VisualAutoBot
                 ? Cyotek.Windows.Forms.ImageBoxSelectionMode.Rectangle 
                 : Cyotek.Windows.Forms.ImageBoxSelectionMode.None;
 
+            PanelMatchSelection.Visible = allowSelection;
+
             return ShowDialog();
         }
 

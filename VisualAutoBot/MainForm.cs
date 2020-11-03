@@ -162,6 +162,10 @@ namespace VisualAutoBot
 
                 }
             }
+            else
+            {
+                CancelButton_Click(this, null);
+            }
         }
 
         private void programTreeView_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
