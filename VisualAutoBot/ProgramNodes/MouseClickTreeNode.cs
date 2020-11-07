@@ -2,35 +2,67 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using VisualAutoBot.Expressions;
 
 namespace VisualAutoBot.ProgramNodes
 {
-    class MouseClickTreeNode : BaseTreeNode
+    class MouseClickTreeNode : BaseTreeNode, IContext
     {
         public MouseClickTreeNode()
         {
             NodeText = "MouseClick";
 
-            Parameters.Add("X", 0);
-            Parameters.Add("Y", 0);
+            Parameters.Add("X", "");
+            Parameters.Add("Y", "");
+
+            MenuItem previewMenu = new MenuItem("View Coordinates");
+            previewMenu.Click += PreviewMenu_Click;
+
+            ContextMenu = new ContextMenu(new MenuItem[] { previewMenu });
         }
+
+        private void PreviewMenu_Click(object sender, EventArgs e)
+        {
+            string name = GetVariable("WindowName").ToString();
+            if (string.IsNullOrEmpty(name))
+            {
+                MessageBox.Show("Can't find gamw window name.");
+                return;
+            }
+
+            Bitmap bitmap = ScreenUtilities.CaptureScreenWindow(name);
+            if (bitmap == default)
+            {
+                MessageBox.Show($"Cannot find game window: {name}");
+                return;
+            }
+
+            ScreenshotPreviewDialog preview = new ScreenshotPreviewDialog();
+            preview.ShowDialog(bitmap);
+        }
+
 
         public override void Save(Dictionary<string, object> _data)
         {
-            if (_data.ContainsKey("Delay"))
+            if (_data.ContainsKey("X"))
             {
-                if(int.TryParse(_data["Delay"].ToString(), out int res) && res >= 0)
+                if (!Parser.CanParse(_data["X"].ToString()))
                 {
-                    _data["Delay"] = res;
+                    _data["X"] = "";
                 }
-                else
+            }
+
+            if (_data.ContainsKey("Y"))
+            {
+                if (!Parser.CanParse(_data["Y"].ToString()))
                 {
-                    _data["Delay"] = 0;
+                    _data["Y"] = "";
                 }
             }
 
@@ -39,17 +71,43 @@ namespace VisualAutoBot.ProgramNodes
 
         public override void Refresh()
         {
-            int x = Convert.ToInt32(Parameters["X"]),
-                y = Convert.ToInt32(Parameters["Y"]);
-            Text = $"{NodeText} ({x}, {y})";
+            if (string.IsNullOrEmpty(Parameters["X"].ToString()) || string.IsNullOrEmpty(Parameters["Y"].ToString()))
+            {
+                Text = NodeText;
+            }
+            else
+            {
+                Text = $"{NodeText} ({Parameters["X"]}, {Parameters["Y"]})";
+            }
         }
 
         public override void Execute()
         {
-            int x = Convert.ToInt32(Parameters["X"]),
-                y = Convert.ToInt32(Parameters["Y"]);
+            double x = Parser.Parse(Parameters["X"].ToString()).Eval(this),
+                y = Parser.Parse(Parameters["Y"].ToString()).Eval(this);
 
-            MouseControl.Click(x, y);
+            MouseControl.Click((int)x, (int)y);
+
+            ToolTipText = $"Clicked at ({x}, {y})";
         }
+    
+        #region Expression execution
+        double IContext.ResolveVariable(string name)
+        {
+            if (VariableExists(name))
+            {
+                return Convert.ToDouble(GetVariable(name));
+            }
+            else
+            {
+                throw new ScriptException($"Vriable '{name}' is not found.", this, false);
+            }
+        }
+
+        double IContext.CallFunction(string name, double[] arguments)
+        {
+            throw new NotImplementedException();
+        }
+        #endregion
     }
 }

@@ -343,7 +343,7 @@ namespace VisualAutoBot
 
             CancelButton_Click(this, null);
 
-            SignalToExit = false;
+            BaseTreeNode.SignalToExit = false;
             IsRunning = true;
             toolAddNode.Enabled = false;
             toolStartScript.Enabled = false;
@@ -365,7 +365,7 @@ namespace VisualAutoBot
                 return;
             }
 
-            SignalToExit = true;
+            BaseTreeNode.SignalToExit = true;
             toolStopScript.Text = "Stopping ...";
             toolStopScript.Enabled = false;
         }
@@ -383,7 +383,6 @@ namespace VisualAutoBot
 
         #endregion
 
-        bool SignalToExit = false;
         public void ScriptRunner()
         {
             while (true)
@@ -396,16 +395,16 @@ namespace VisualAutoBot
                 {
                     if (e.IsFatal)
                     {
-                        SignalToExit = true;
+                        BaseTreeNode.SignalToExit = true;
                     }
                 }
                 catch (Exception e)
                 {
-                    MessageBox.Show("Exception Throw", e.Message);
-                    SignalToExit = true;
+                    MessageBox.Show(e.Message, "Exception Throw");
+                    BaseTreeNode.SignalToExit = true;
                 }
 
-                if (SignalToExit) break;
+                if (BaseTreeNode.SignalToExit) break;
             }
 
             Invoke(new Action(() =>

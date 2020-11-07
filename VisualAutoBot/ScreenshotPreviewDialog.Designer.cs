@@ -39,6 +39,7 @@
             // 
             this.PictureBoxOutput.AlwaysShowHScroll = true;
             this.PictureBoxOutput.AlwaysShowVScroll = true;
+            this.PictureBoxOutput.AutoCenter = false;
             this.PictureBoxOutput.Cursor = System.Windows.Forms.Cursors.Cross;
             this.PictureBoxOutput.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PictureBoxOutput.GridScale = Cyotek.Windows.Forms.ImageBoxGridScale.Medium;
@@ -51,6 +52,7 @@
             this.PictureBoxOutput.SelectionMoved += new System.EventHandler(this.PictureBoxOutput_Selected);
             this.PictureBoxOutput.SelectionResized += new System.EventHandler(this.PictureBoxOutput_Selected);
             this.PictureBoxOutput.Selected += new System.EventHandler<System.EventArgs>(this.PictureBoxOutput_Selected);
+            this.PictureBoxOutput.MouseMove += new System.Windows.Forms.MouseEventHandler(this.PictureBoxOutput_MouseMove);
             // 
             // PanelMatchSelection
             // 

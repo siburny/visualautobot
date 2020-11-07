@@ -51,5 +51,10 @@ namespace VisualAutoBot
             Template = new Bitmap(PictureBoxMatchSelection.Image);
             DialogResult = DialogResult.OK;
         }
+
+        private void PictureBoxOutput_MouseMove(object sender, MouseEventArgs e)
+        {
+            Text = $"Location: ({e.X}, {e.Y})";
+        }
     }
 }

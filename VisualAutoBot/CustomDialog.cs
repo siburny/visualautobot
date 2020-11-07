@@ -12,7 +12,7 @@ namespace VisualAutoBot
         CustomDialog()
         {
             Text = "Please select";
-            Size = new Size(400, 300);
+            Size = new Size(400, 500);
             FormBorderStyle = FormBorderStyle.FixedDialog;
             StartPosition = FormStartPosition.CenterParent;
             MinimizeBox = false;

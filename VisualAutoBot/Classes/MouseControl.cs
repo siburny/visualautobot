@@ -42,8 +42,8 @@ namespace VisualAutoBot
                 ;
         }
 
-        const int SPEED = 250;
-        const int STEPS = 25;
+        const int SPEED = 50;
+        const int STEPS = 15;
         public static void Click(int x, int y)
         {
             System.Timers.Timer t = new System.Timers.Timer();
@@ -69,7 +69,7 @@ namespace VisualAutoBot
             }
             t.Dispose();
 
-            //MouseEvent(MouseEventFlags.LeftDown | MouseEventFlags.LeftUp);
+            MouseEvent(MouseEventFlags.LeftDown | MouseEventFlags.LeftUp);
         }
 
         [Flags]

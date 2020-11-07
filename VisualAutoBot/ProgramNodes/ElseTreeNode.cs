@@ -1,52 +1,48 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace VisualAutoBot.ProgramNodes
 {
-    class LoopTreeNode : BaseTreeNode
+    class ElseTreeNode : BaseTreeNode
     {
-        public LoopTreeNode() : base()
+        //private 
+        public ElseTreeNode()
         {
-            NodeText = "Loop";
-
-            Parameters.Add("WindowName", "TrainStation - Pixel");
-            SetVariable("WindowName", "TrainStation - Pixel");
+            NodeText = "Else";
         }
 
-        public override void Execute()
+        public override void Save(Dictionary<string, object> _data)
         {
-            var window = ScreenUtilities.GetWindowByName(Parameters["WindowName"].ToString());
-            if(window == default)
+            if (_data.ContainsKey("Condition"))
             {
-                throw new ScriptException($"Cannot find game window: {Parameters["WindowName"]}", this);
             }
-            
-            SetVariable("WindowHandle", window);
 
-            foreach (var node in Nodes)
-            {
-                if (SignalToExit) break;
-                (node as BaseTreeNode).Run();
-            }
+            base.Save(_data);
         }
 
         public override void Refresh()
         {
-            SetVariable("WindowName", Parameters["WindowName"]);
+            Text = NodeText;
+        }
+
+        public override void Execute()
+        {
         }
 
         public override void FromJSON(JObject json)
         {
             base.FromJSON(json);
 
-            if(json.ContainsKey("Nodes"))
+            if (json.ContainsKey("Nodes"))
             {
-                foreach(JObject obj in json["Nodes"])
+                foreach (JObject obj in json["Nodes"])
                 {
                     Create(obj, Nodes);
                 }

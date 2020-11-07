@@ -10,6 +10,8 @@ namespace VisualAutoBot.ProgramNodes
 {
     abstract class BaseTreeNode : TreeNode, IRunnableTreeNode
     {
+        public static bool SignalToExit = false;
+
         private string _nodeText = "";
         public string NodeText
         {
@@ -30,6 +32,8 @@ namespace VisualAutoBot.ProgramNodes
             { "ScreenshotTreeNode", typeof(ScreenshotTreeNode) },
             { "MouseClickTreeNode", typeof(MouseClickTreeNode) },
             { "MatchTemplateTreeNode", typeof(MatchTemplateTreeNode) },
+            { "IfTreeNode", typeof(IfTreeNode) },
+            { "ElseTreeNode", typeof(ElseTreeNode) },
         };
 
         internal Dictionary<string, object> Parameters = new Dictionary<string, object>();
@@ -168,6 +172,23 @@ namespace VisualAutoBot.ProgramNodes
             else
             {
                 return null;
+            }
+        }
+
+        public static T GetVariable<T>(string name) 
+        {
+            if (_variables.ContainsKey(name))
+            {
+                if(_variables[name] is T)
+                    return (T)_variables[name];
+                else
+                {
+                    return default;
+                }
+            }
+            else
+            {
+                return default;
             }
         }
 

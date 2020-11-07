@@ -44,7 +44,7 @@ namespace VisualAutoBot
             return CaptureWindow(GetDesktopWindow(), rect);
         }
 
-        public static Bitmap CaptureWindow(IntPtr handle)
+        private static Bitmap CaptureWindow(IntPtr handle)
         {
             RECT rect = new RECT();
             

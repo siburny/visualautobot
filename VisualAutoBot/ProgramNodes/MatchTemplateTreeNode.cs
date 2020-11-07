@@ -20,11 +20,10 @@ namespace VisualAutoBot.ProgramNodes
         {
             NodeText = "Match";
 
-            Parameters.Add("Variable", "location");
+            Parameters.Add("Name", "");
             Parameters.Add("XY", "");
             Parameters.Add("WidthHeight", "");
             Parameters.Add("ClickOffset", "");
-            Parameters.Add("MatchValue", 0.95);
             Parameters.Add("Template", null);
 
             MenuItem matchSelectionMenu = new MenuItem("Match Selection");
@@ -114,7 +113,7 @@ namespace VisualAutoBot.ProgramNodes
                 {
                     Cv2.MinMaxLoc(result, out _, out double maxValue, out _, out OpenCvSharp.Point maxLocation);
 
-                    if (maxValue > (double)Parameters["MatchValue"])
+                    if (maxValue > 0.9)
                     {
                         mat.Rectangle(new Rect(maxLocation.X, maxLocation.Y, template.Width, template.Height), Scalar.LightGreen, 3);
                         mat.PutText(maxValue.ToString("0.##"), new OpenCvSharp.Point(maxLocation.X, maxLocation.Y), HersheyFonts.HersheyPlain, 2, Scalar.White, 3);
@@ -171,11 +170,6 @@ namespace VisualAutoBot.ProgramNodes
 
         public override void Save(Dictionary<string, object> _data)
         {
-            if (_data.ContainsKey("Variable"))
-            {
-                Refresh();
-            }
-
             if (_data.ContainsKey("XY"))
             {
                 string[] str = _data["XY"].ToString().Split(',');
@@ -193,18 +187,6 @@ namespace VisualAutoBot.ProgramNodes
                     {
                         _data["XY"] = "";
                     }
-                }
-            }
-
-            if (_data.ContainsKey("MatchValue"))
-            {
-                if (double.TryParse(_data["MatchValue"].ToString(), out double res))
-                {
-                    _data["MatchValue"] = res;
-                }
-                else
-                {
-                    _data["MatchValue"] = 0.95;
                 }
             }
 
@@ -253,21 +235,19 @@ namespace VisualAutoBot.ProgramNodes
 
         public override void Refresh()
         {
-            Text = $"{NodeText} ({Parameters["Variable"]})";
+            Text = $"{NodeText}{(string.IsNullOrEmpty(Parameters["Name"].ToString()) ? "" : ": " + Parameters["Name"])}";
         }
 
         public override void Execute()
         {
-            string name = GetVariable("WindowName").ToString();
-            if (string.IsNullOrEmpty(name))
-            {
-                throw new ScriptException("Can't find gamw window name.", this);
-            }
+            SetVariable("MatchX", 0);
+            SetVariable("MatchY", 0);
+            SetVariable("MatchValue", 0);
 
-            Bitmap bitmap = ScreenUtilities.CaptureScreenWindow(name);
+            Bitmap bitmap = GetVariable<Bitmap>("Screenshot");
             if (bitmap == null)
             {
-                throw new ScriptException($"Cannot find game window: {name}", this);
+                throw new ScriptException($"Cannot load screenshot from variable Screenshot", this);
             }
 
             if (Parameters["Template"] == null || !(Parameters["Template"] is Bitmap))
@@ -283,15 +263,27 @@ namespace VisualAutoBot.ProgramNodes
                 {
                     Cv2.MinMaxLoc(result, out _, out double maxValue, out _, out OpenCvSharp.Point maxLocation);
 
-                    if (maxValue > (double)Parameters["MatchValue"])
+                    System.Drawing.Point location = new System.Drawing.Point(maxLocation.X, maxLocation.Y);
+
+                    if (!string.IsNullOrEmpty(Parameters["XY"].ToString()))
                     {
-                        SetVariable("Location", new System.Drawing.Point(maxLocation.X, maxLocation.Y));
-                    }
-                    else 
-                    {
-                        SetVariable("Location", null);
+                        string[] xy = Parameters["XY"].ToString().Split(',');
+
+                        location.X += Convert.ToInt32(xy[0]);
+                        location.Y += Convert.ToInt32(xy[1]);
                     }
 
+                    if (!string.IsNullOrEmpty(Parameters["ClickOffset"].ToString()))
+                    {
+                        string[] offset = Parameters["ClickOffset"].ToString().Split(',');
+
+                        location.X += Convert.ToInt32(offset[0]);
+                        location.Y += Convert.ToInt32(offset[1]);
+                    }
+
+                    SetVariable("MatchX", location.X);
+                    SetVariable("MatchY", location.Y);
+                    SetVariable("MatchValue", maxValue);
                 }
             }
             catch (OpenCVException ex)
