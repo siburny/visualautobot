@@ -418,7 +418,7 @@ namespace VisualAutoBot
             }));
         }
 
-        private void scriptDelayUpDown_ValueChanged(object sender, EventArgs e)
+        private void ScriptDelayUpDown_ValueChanged(object sender, EventArgs e)
         {
             BaseTreeNode.Delay = (int)scriptDelayUpDown.Value;
         }

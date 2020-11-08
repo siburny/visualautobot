@@ -7,6 +7,8 @@ namespace VisualAutoBot.ProgramNodes
 {
     class ScreenshotTreeNode : BaseTreeNode
     {
+        public Bitmap Screenshot = null;
+
         public ScreenshotTreeNode()
         {
             NodeText = "Screenshot";
@@ -66,6 +68,7 @@ namespace VisualAutoBot.ProgramNodes
             }
 
             SetVariable("Screenshot", bitmap);
+            Screenshot = new Bitmap(bitmap);
         }
     }
 }

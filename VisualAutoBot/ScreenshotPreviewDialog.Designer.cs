@@ -56,6 +56,7 @@
             // 
             // PanelMatchSelection
             // 
+            this.PanelMatchSelection.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.PanelMatchSelection.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.PanelMatchSelection.Controls.Add(this.ButtonSaveSelection);
             this.PanelMatchSelection.Controls.Add(this.PictureBoxMatchSelection);

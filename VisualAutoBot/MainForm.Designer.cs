@@ -161,7 +161,7 @@ namespace VisualAutoBot
             this.scriptDelayUpDown.Size = new System.Drawing.Size(120, 30);
             this.scriptDelayUpDown.TabIndex = 5;
             this.scriptDelayUpDown.UpDownAlign = System.Windows.Forms.LeftRightAlignment.Left;
-            this.scriptDelayUpDown.ValueChanged += new System.EventHandler(this.scriptDelayUpDown_ValueChanged);
+            this.scriptDelayUpDown.ValueChanged += new System.EventHandler(this.ScriptDelayUpDown_ValueChanged);
             // 
             // MainForm
             // 

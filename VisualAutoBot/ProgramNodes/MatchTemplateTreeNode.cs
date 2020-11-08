@@ -16,6 +16,8 @@ namespace VisualAutoBot.ProgramNodes
 {
     class MatchTemplateTreeNode : BaseTreeNode
     {
+        public Bitmap Match = null;
+
         public MatchTemplateTreeNode()
         {
             NodeText = "Match";
@@ -297,6 +299,19 @@ namespace VisualAutoBot.ProgramNodes
                     SetVariable("MatchX", location.X);
                     SetVariable("MatchY", location.Y);
                     SetVariable("MatchValue", maxValue);
+
+                    if (maxValue > 0.9)
+                    {
+                        mat.Rectangle(new Rect(maxLocation.X, maxLocation.Y, template.Width, template.Height), Scalar.LightGreen, 3);
+                        mat.PutText(maxValue.ToString("0.##"), new OpenCvSharp.Point(maxLocation.X, maxLocation.Y), HersheyFonts.HersheyPlain, 2, Scalar.White, 3);
+                    }
+                    else if (maxValue > 0.5)
+                    {
+                        mat.Rectangle(new Rect(maxLocation.X, maxLocation.Y, template.Width, template.Height), Scalar.LightCoral, 3);
+                        mat.PutText(maxValue.ToString("0.##"), new OpenCvSharp.Point(maxLocation.X, maxLocation.Y), HersheyFonts.HersheyPlain, 2, Scalar.White, 3);
+                    }
+                    
+                    Match = mat.ToBitmap();
                 }
             }
             catch (OpenCVException ex)
