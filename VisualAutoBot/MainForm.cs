@@ -34,10 +34,10 @@ namespace VisualAutoBot
         {
             _startStopHotkey = new Hotkey(Keys.Control, Keys.F8);
             _hotkeyListener.Add(_startStopHotkey);
-            _hotkeyListener.HotkeyPressed += _hotkeyListener_HotkeyPressed;
+            _hotkeyListener.HotkeyPressed += hotkeyListener_HotkeyPressed;
         }
 
-        private void _hotkeyListener_HotkeyPressed(object sender, HotkeyEventArgs e)
+        private void hotkeyListener_HotkeyPressed(object sender, HotkeyEventArgs e)
         {
             if(e.Hotkey == _startStopHotkey)
             {
@@ -389,7 +389,7 @@ namespace VisualAutoBot
             {
                 try
                 {
-                    (programTreeView.Nodes[0] as LoopTreeNode).Run(false);
+                    (programTreeView.Nodes[0] as LoopTreeNode).Run();
                 }
                 catch(ScriptException e)
                 {
@@ -416,6 +416,11 @@ namespace VisualAutoBot
 
                 toolStopScript.Text = "Stop";
             }));
+        }
+
+        private void scriptDelayUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            BaseTreeNode.Delay = (int)scriptDelayUpDown.Value;
         }
     }
 }

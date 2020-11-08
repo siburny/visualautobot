@@ -40,7 +40,9 @@ namespace VisualAutoBot
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStartScript = new System.Windows.Forms.ToolStripButton();
             this.toolStopScript = new System.Windows.Forms.ToolStripButton();
+            this.scriptDelayUpDown = new System.Windows.Forms.NumericUpDown();
             this.toolStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.scriptDelayUpDown)).BeginInit();
             this.SuspendLayout();
             // 
             // programTreeView
@@ -56,7 +58,7 @@ namespace VisualAutoBot
             this.programTreeView.PathSeparator = "::";
             this.programTreeView.ShowNodeToolTips = true;
             this.programTreeView.ShowRootLines = false;
-            this.programTreeView.Size = new System.Drawing.Size(556, 1629);
+            this.programTreeView.Size = new System.Drawing.Size(556, 1631);
             this.programTreeView.TabIndex = 0;
             this.programTreeView.TabStop = false;
             this.programTreeView.BeforeCollapse += new System.Windows.Forms.TreeViewCancelEventHandler(this.programTreeView_BeforeCollapse);
@@ -81,7 +83,7 @@ namespace VisualAutoBot
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panelEditNode.Location = new System.Drawing.Point(575, 36);
             this.panelEditNode.Name = "panelEditNode";
-            this.panelEditNode.Size = new System.Drawing.Size(842, 1629);
+            this.panelEditNode.Size = new System.Drawing.Size(779, 1631);
             this.panelEditNode.TabIndex = 2;
             // 
             // toolStrip1
@@ -95,7 +97,7 @@ namespace VisualAutoBot
             this.toolStopScript});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(2058, 31);
+            this.toolStrip1.Size = new System.Drawing.Size(1354, 31);
             this.toolStrip1.TabIndex = 3;
             this.toolStrip1.Text = "MainToolStrip";
             // 
@@ -141,11 +143,32 @@ namespace VisualAutoBot
             this.toolStopScript.Text = "Stop";
             this.toolStopScript.Click += new System.EventHandler(this.toolStopScript_Click);
             // 
+            // scriptDelayUpDown
+            // 
+            this.scriptDelayUpDown.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.scriptDelayUpDown.Increment = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.scriptDelayUpDown.Location = new System.Drawing.Point(1233, 0);
+            this.scriptDelayUpDown.Maximum = new decimal(new int[] {
+            5000,
+            0,
+            0,
+            0});
+            this.scriptDelayUpDown.Name = "scriptDelayUpDown";
+            this.scriptDelayUpDown.Size = new System.Drawing.Size(120, 30);
+            this.scriptDelayUpDown.TabIndex = 5;
+            this.scriptDelayUpDown.UpDownAlign = System.Windows.Forms.LeftRightAlignment.Left;
+            this.scriptDelayUpDown.ValueChanged += new System.EventHandler(this.scriptDelayUpDown_ValueChanged);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(2058, 1665);
+            this.ClientSize = new System.Drawing.Size(1354, 1667);
+            this.Controls.Add(this.scriptDelayUpDown);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.panelEditNode);
             this.Controls.Add(this.buttonAddNode);
@@ -158,6 +181,7 @@ namespace VisualAutoBot
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.scriptDelayUpDown)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -174,5 +198,6 @@ namespace VisualAutoBot
         private System.Windows.Forms.ToolStripButton toolStopScript;
         private System.Windows.Forms.ToolStripButton toolRemove;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.NumericUpDown scriptDelayUpDown;
     }
 }

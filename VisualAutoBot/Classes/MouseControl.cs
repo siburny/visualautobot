@@ -43,7 +43,7 @@ namespace VisualAutoBot
         }
 
         const int SPEED = 50;
-        const int STEPS = 15;
+        const int STEPS = 10;
         public static void Click(int x, int y)
         {
             System.Timers.Timer t = new System.Timers.Timer();

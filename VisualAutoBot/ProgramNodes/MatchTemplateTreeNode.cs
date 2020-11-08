@@ -123,6 +123,19 @@ namespace VisualAutoBot.ProgramNodes
                         mat.Rectangle(new Rect(maxLocation.X, maxLocation.Y, template.Width, template.Height), Scalar.LightCoral, 3);
                         mat.PutText(maxValue.ToString("0.##"), new OpenCvSharp.Point(maxLocation.X, maxLocation.Y), HersheyFonts.HersheyPlain, 2, Scalar.White, 3);
                     }
+
+                    if (!string.IsNullOrEmpty(Parameters["ClickOffset"].ToString()))
+                    {
+                        string[] str = Parameters["ClickOffset"].ToString().Split(',');
+
+                        int offsetX = Convert.ToInt32(str[0]) + maxLocation.X;
+                        int offsetY = Convert.ToInt32(str[1]) + maxLocation.Y;
+
+                        int length = 20;
+                        mat.Line(offsetX - length, offsetY, offsetX + length, offsetY, Scalar.White, 2);
+                        mat.Line(offsetX, offsetY - length, offsetX, offsetY + length, Scalar.White, 2);
+                        mat.Circle(offsetX, offsetY, length / 4, Scalar.White);
+                    }
                 }
 
                 ScreenshotPreviewDialog preview = new ScreenshotPreviewDialog();

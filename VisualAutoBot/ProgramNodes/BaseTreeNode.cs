@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace VisualAutoBot.ProgramNodes
@@ -11,6 +12,7 @@ namespace VisualAutoBot.ProgramNodes
     abstract class BaseTreeNode : TreeNode, IRunnableTreeNode
     {
         public static bool SignalToExit = false;
+        public static int Delay = 0;
 
         private string _nodeText = "";
         public string NodeText
@@ -83,16 +85,23 @@ namespace VisualAutoBot.ProgramNodes
             {
                 if (Parameters.ContainsKey(param.Name))
                 {
-                    string value = (param.Value as JValue).Value.ToString();
-
-                    if (value.StartsWith("PNG:"))
+                    if ((param.Value as JValue).Value == null)
                     {
-                        MemoryStream m = new MemoryStream(Convert.FromBase64String(value.Substring(4)));
-                        Parameters[param.Name] = Bitmap.FromStream(m);
+                        Parameters[param.Name] = null;
                     }
                     else
                     {
-                        Parameters[param.Name] = (param.Value as JValue).Value;
+                        string value = (param.Value as JValue).Value.ToString();
+
+                        if (value.StartsWith("PNG:"))
+                        {
+                            MemoryStream m = new MemoryStream(Convert.FromBase64String(value.Substring(4)));
+                            Parameters[param.Name] = Bitmap.FromStream(m);
+                        }
+                        else
+                        {
+                            Parameters[param.Name] = (param.Value as JValue).Value;
+                        }
                     }
                 }
             }
@@ -127,8 +136,10 @@ namespace VisualAutoBot.ProgramNodes
 
         public abstract void Execute();
 
-        public void Run(bool highlight = true)
+        public void Run()
         {
+            Boolean highlight = !(this is LoopTreeNode || this is IfTreeNode || this is ElseTreeNode);
+
             if (highlight)
             {
                 BackColor = Color.LightGreen;
@@ -137,6 +148,11 @@ namespace VisualAutoBot.ProgramNodes
             try
             {
                 Execute();
+
+                if (Delay > 0)
+                {
+                    Thread.Sleep(Delay);
+                }
             }
             catch(ScriptException e)
             {
