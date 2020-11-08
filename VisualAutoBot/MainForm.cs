@@ -155,7 +155,7 @@ namespace VisualAutoBot
                     {
                         CancelButton_Click(this, null);
                     }
-                    else
+                    else if(!IsRunning)
                     {
                         clickedNode = hit.Node;
                     }
