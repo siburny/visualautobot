@@ -11,7 +11,7 @@ namespace VisualAutoBot.ProgramNodes
 
             Parameters.Add("Name", "Comment");
 
-            BackColor = Color.LightGray;
+            BackColor = _backColor = Color.LightGray;
         }
 
         public override void Refresh()

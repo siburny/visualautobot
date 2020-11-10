@@ -47,7 +47,7 @@ namespace VisualAutoBot.ProgramNodes
 
                 bool result = Parser.Parse(expr, true).EvalBoolean(this);
 
-                BackColor = Color.Empty;
+                BackColor = _backColor;
 
                 if(result)
                 {

@@ -61,12 +61,11 @@ namespace VisualAutoBot
             this.programTreeView.Size = new System.Drawing.Size(556, 1631);
             this.programTreeView.TabIndex = 0;
             this.programTreeView.TabStop = false;
-            this.programTreeView.BeforeCollapse += new System.Windows.Forms.TreeViewCancelEventHandler(this.programTreeView_BeforeCollapse);
-            this.programTreeView.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.programTreeView_ItemDrag);
+            this.programTreeView.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.ProgramTreeView_ItemDrag);
             this.programTreeView.BeforeSelect += new System.Windows.Forms.TreeViewCancelEventHandler(this.programTreeView_BeforeSelect);
             this.programTreeView.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.programTreeView_NodeMouseClick);
-            this.programTreeView.DragDrop += new System.Windows.Forms.DragEventHandler(this.programTreeView_DragDrop);
-            this.programTreeView.DragOver += new System.Windows.Forms.DragEventHandler(this.programTreeView_DragOver);
+            this.programTreeView.DragDrop += new System.Windows.Forms.DragEventHandler(this.ProgramTreeView_DragDrop);
+            this.programTreeView.DragOver += new System.Windows.Forms.DragEventHandler(this.ProgramTreeView_DragOver);
             this.programTreeView.MouseDown += new System.Windows.Forms.MouseEventHandler(this.programTreeView_MouseDown);
             // 
             // buttonAddNode
@@ -108,7 +107,7 @@ namespace VisualAutoBot
             this.toolAddNode.Name = "toolAddNode";
             this.toolAddNode.Size = new System.Drawing.Size(65, 28);
             this.toolAddNode.Text = "Add";
-            this.toolAddNode.Click += new System.EventHandler(this.toolAddNode_Click);
+            this.toolAddNode.Click += new System.EventHandler(this.ToolAddNode_Click);
             // 
             // toolRemove
             // 
@@ -117,7 +116,7 @@ namespace VisualAutoBot
             this.toolRemove.Name = "toolRemove";
             this.toolRemove.Size = new System.Drawing.Size(81, 28);
             this.toolRemove.Text = "Delete";
-            this.toolRemove.Click += new System.EventHandler(this.toolRemove_Click);
+            this.toolRemove.Click += new System.EventHandler(this.ToolRemove_Click);
             // 
             // toolStripSeparator2
             // 
@@ -131,7 +130,7 @@ namespace VisualAutoBot
             this.toolStartScript.Name = "toolStartScript";
             this.toolStartScript.Size = new System.Drawing.Size(68, 28);
             this.toolStartScript.Text = "Start";
-            this.toolStartScript.Click += new System.EventHandler(this.toolStartScript_Click);
+            this.toolStartScript.Click += new System.EventHandler(this.ToolStartScript_Click);
             // 
             // toolStopScript
             // 
@@ -141,7 +140,7 @@ namespace VisualAutoBot
             this.toolStopScript.Name = "toolStopScript";
             this.toolStopScript.Size = new System.Drawing.Size(68, 28);
             this.toolStopScript.Text = "Stop";
-            this.toolStopScript.Click += new System.EventHandler(this.toolStopScript_Click);
+            this.toolStopScript.Click += new System.EventHandler(this.ToolStopScript_Click);
             // 
             // scriptDelayUpDown
             // 

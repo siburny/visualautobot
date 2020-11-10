@@ -16,6 +16,7 @@ namespace VisualAutoBot.ProgramNodes
         public static int Delay = 0;
 
         private string _nodeText = "";
+        internal Color _backColor = Color.Empty;
         public string NodeText
         {
             get
@@ -38,7 +39,7 @@ namespace VisualAutoBot.ProgramNodes
             { "IfTreeNode", typeof(IfTreeNode) },
             { "ElseTreeNode", typeof(ElseTreeNode) },
             { "CommentTreeNode", typeof(CommentTreeNode) },
-
+            { "ProgramTreeNode", typeof(ProgramTreeNode) },
         };
 
         internal Dictionary<string, object> Parameters = new Dictionary<string, object>();
@@ -114,9 +115,11 @@ namespace VisualAutoBot.ProgramNodes
 
         public virtual JToken ToJSON()
         {
-            JObject json = new JObject();
+            JObject json = new JObject
+            {
+                { "Type", GetType().Name }
+            };
 
-            json.Add("Type", GetType().Name);
             foreach (var param in Parameters)
             {
                 if (param.Value != null && param.Value is Bitmap)
@@ -166,7 +169,7 @@ namespace VisualAutoBot.ProgramNodes
 
             if (highlight)
             {
-                BackColor = Color.Empty;
+                BackColor = _backColor;
             }
         }
 
@@ -175,7 +178,7 @@ namespace VisualAutoBot.ProgramNodes
             if (!(this is CommentTreeNode))
             {
                 ToolTipText = "";
-                BackColor = Color.Empty;
+                BackColor = _backColor;
 
                 foreach (var node in Nodes)
                 {

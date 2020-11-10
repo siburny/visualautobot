@@ -124,6 +124,7 @@
     <Compile Include="ProgramNodes\IRunnableTreeNode.cs" />
     <Compile Include="ProgramNodes\BaseTreeNode.cs" />
     <Compile Include="ProgramNodes\CalcTreeNode.cs" />
+    <Compile Include="ProgramNodes\ProgramTreeNode.cs" />
     <Compile Include="ProgramNodes\MouseClickTreeNode.cs" />
     <Compile Include="ProgramNodes\MatchTemplateTreeNode.cs" />
     <Compile Include="ProgramNodes\IfTreeNode.cs" />

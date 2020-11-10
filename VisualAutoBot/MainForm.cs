@@ -28,16 +28,16 @@ namespace VisualAutoBot
             SetupHotKeys();
         }
 
-        HotkeyListener _hotkeyListener = new HotkeyListener();
+        readonly HotkeyListener _hotkeyListener = new HotkeyListener();
         Hotkey _startStopHotkey;
         private void SetupHotKeys()
         {
             _startStopHotkey = new Hotkey(Keys.Control, Keys.F8);
             _hotkeyListener.Add(_startStopHotkey);
-            _hotkeyListener.HotkeyPressed += hotkeyListener_HotkeyPressed;
+            _hotkeyListener.HotkeyPressed += HotkeyListener_HotkeyPressed;
         }
 
-        private void hotkeyListener_HotkeyPressed(object sender, HotkeyEventArgs e)
+        private void HotkeyListener_HotkeyPressed(object sender, HotkeyEventArgs e)
         {
             if(e.Hotkey == _startStopHotkey)
             {
@@ -267,15 +267,9 @@ namespace VisualAutoBot
             programTreeView.SelectedNode = null;
         }
 
-        private void programTreeView_BeforeCollapse(object sender, TreeViewCancelEventArgs e)
+        private void ProgramTreeView_DragDrop(object sender, DragEventArgs e)
         {
-            e.Cancel = true;
-        }
-
-        private void programTreeView_DragDrop(object sender, DragEventArgs e)
-        {
-            BaseTreeNode draggedNode = e.Data.GetData(e.Data.GetFormats()[0]) as BaseTreeNode;
-            if (draggedNode == null)
+            if (!(e.Data.GetData(e.Data.GetFormats()[0]) is BaseTreeNode draggedNode))
             {
                 return;
             }
@@ -288,16 +282,15 @@ namespace VisualAutoBot
             }
         }
 
-        private void programTreeView_ItemDrag(object sender, ItemDragEventArgs e)
+        private void ProgramTreeView_ItemDrag(object sender, ItemDragEventArgs e)
         {
             BaseTreeNode node = (BaseTreeNode)e.Item;
             DoDragDrop(node, DragDropEffects.Move);
         }
 
-        private void programTreeView_DragOver(object sender, DragEventArgs e)
+        private void ProgramTreeView_DragOver(object sender, DragEventArgs e)
         {
-            BaseTreeNode draggedNode = e.Data.GetData(e.Data.GetFormats()[0]) as BaseTreeNode;
-            if (draggedNode == null)
+            if (!(e.Data.GetData(e.Data.GetFormats()[0]) is BaseTreeNode draggedNode))
             {
                 e.Effect = DragDropEffects.None;
                 return;
@@ -319,7 +312,7 @@ namespace VisualAutoBot
 
         #region ToolBar code
 
-        private void toolAddNode_Click(object sender, EventArgs e)
+        private void ToolAddNode_Click(object sender, EventArgs e)
         {
             if(clickedNode == null)
             {
@@ -333,13 +326,13 @@ namespace VisualAutoBot
                 BaseTreeNode node = Activator.CreateInstance(BaseTreeNode.AvailableTypes[selected + "TreeNode"]) as BaseTreeNode;
                 clickedNode.Nodes.Add(node);
 
-                programTreeView.ExpandAll();
+                clickedNode.Expand();
                 programTreeView.SelectedNode = clickedNode = node;
                 programTreeView_NodeMouseClick(sender, null);
             }
         }
 
-        private void toolStartScript_Click(object sender, EventArgs e)
+        private void ToolStartScript_Click(object sender, EventArgs e)
         {
             if(IsRunning)
             {
@@ -363,7 +356,7 @@ namespace VisualAutoBot
             runner.Start();
         }
 
-        private void toolStopScript_Click(object sender, EventArgs e)
+        private void ToolStopScript_Click(object sender, EventArgs e)
         {
             if (!IsRunning)
             {
@@ -375,15 +368,18 @@ namespace VisualAutoBot
             toolStopScript.Enabled = false;
         }
 
-        private void toolRemove_Click(object sender, EventArgs e)
+        private void ToolRemove_Click(object sender, EventArgs e)
         {
             if(clickedNode == null)
             {
                 return;
             }
 
-            clickedNode.Remove();
-            CancelButton_Click(this, null);
+            if (MessageBox.Show("Are you sure?", "Confirm the deletion", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
+            {
+                clickedNode.Remove();
+                CancelButton_Click(this, null);
+            }
         }
 
         #endregion
