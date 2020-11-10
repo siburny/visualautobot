@@ -45,7 +45,7 @@ namespace VisualAutoBot.ProgramNodes
                     throw new ScriptException("Empty If condition", this);
                 }
 
-                bool result = Parser.Parse(expr, true).EvalBoolean(this);
+                bool result = Parser.ParseBoolean(expr).EvalBoolean(this);
 
                 BackColor = _backColor;
 
@@ -88,9 +88,9 @@ namespace VisualAutoBot.ProgramNodes
             }
         }
 
-        public override JToken ToJSON()
+        public override JObject ToJSON()
         {
-            JToken json = base.ToJSON();
+            JObject json = base.ToJSON();
             JArray array = new JArray();
 
             json["Nodes"] = array;

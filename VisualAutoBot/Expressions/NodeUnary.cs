@@ -16,10 +16,10 @@ namespace VisualAutoBot.Expressions
         Node _rhs;                              // Right hand side of the operation
         Func<double, double> _op;               // The callback operator
 
-        public override double Eval(IContext ctx)
+        public override double EvalDouble(IContext ctx)
         {
             // Evaluate RHS
-            var rhsVal = _rhs.Eval(ctx);
+            var rhsVal = _rhs.EvalDouble(ctx);
 
             // Evaluate and return
             var result = _op(rhsVal);

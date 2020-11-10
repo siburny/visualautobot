@@ -12,7 +12,7 @@ namespace VisualAutoBot.Expressions
 
         double _number;             // The number
 
-        public override double Eval(IContext ctx)
+        public override double EvalDouble(IContext ctx)
         {
             // Just return it.  Too easy.
             return _number;

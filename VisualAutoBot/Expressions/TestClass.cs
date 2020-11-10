@@ -8,27 +8,27 @@ namespace VisualAutoBot.Expressions
         [TestMethod]
         public void TestBoolean()
         {
-            Assert.IsTrue(Parser.Parse("2 > 1", true).EvalBoolean(this));
-            Assert.IsFalse(Parser.Parse("2 > 2", true).EvalBoolean(this));
-            Assert.IsFalse(Parser.Parse("2 > 3", true).EvalBoolean(this));
+            Assert.IsTrue(Parser.ParseBoolean("2 > 1").EvalBoolean(this));
+            Assert.IsFalse(Parser.ParseBoolean("2 > 2").EvalBoolean(this));
+            Assert.IsFalse(Parser.ParseBoolean("2 > 3").EvalBoolean(this));
 
-            Assert.IsTrue(Parser.Parse("2 < 3", true).EvalBoolean(this));
-            Assert.IsFalse(Parser.Parse("2 < 2", true).EvalBoolean(this));
-            Assert.IsFalse(Parser.Parse("2 < 1", true).EvalBoolean(this));
+            Assert.IsTrue(Parser.ParseBoolean("2 < 3").EvalBoolean(this));
+            Assert.IsFalse(Parser.ParseBoolean("2 < 2").EvalBoolean(this));
+            Assert.IsFalse(Parser.ParseBoolean("2 < 1").EvalBoolean(this));
 
-            Assert.IsTrue(Parser.Parse("2 >= 1", true).EvalBoolean(this));
-            Assert.IsTrue(Parser.Parse("2 >= 2", true).EvalBoolean(this));
-            Assert.IsFalse(Parser.Parse("2 >= 3", true).EvalBoolean(this));
+            Assert.IsTrue(Parser.ParseBoolean("2 >= 1").EvalBoolean(this));
+            Assert.IsTrue(Parser.ParseBoolean("2 >= 2").EvalBoolean(this));
+            Assert.IsFalse(Parser.ParseBoolean("2 >= 3").EvalBoolean(this));
 
-            Assert.IsTrue(Parser.Parse("2 <= 3", true).EvalBoolean(this));
-            Assert.IsTrue(Parser.Parse("2 <= 2", true).EvalBoolean(this));
-            Assert.IsFalse(Parser.Parse("2 <= 1", true).EvalBoolean(this));
+            Assert.IsTrue(Parser.ParseBoolean("2 <= 3").EvalBoolean(this));
+            Assert.IsTrue(Parser.ParseBoolean("2 <= 2").EvalBoolean(this));
+            Assert.IsFalse(Parser.ParseBoolean("2 <= 1").EvalBoolean(this));
 
-            Assert.IsTrue(Parser.Parse("2 == 2", true).EvalBoolean(this));
-            Assert.IsFalse(Parser.Parse("2 == 1", true).EvalBoolean(this));
+            Assert.IsTrue(Parser.ParseBoolean("2 == 2").EvalBoolean(this));
+            Assert.IsFalse(Parser.ParseBoolean("2 == 1").EvalBoolean(this));
 
-            Assert.IsTrue(Parser.Parse("2 != 1", true).EvalBoolean(this));
-            Assert.IsFalse(Parser.Parse("2 != 2", true).EvalBoolean(this));
+            Assert.IsTrue(Parser.ParseBoolean("2 != 1").EvalBoolean(this));
+            Assert.IsFalse(Parser.ParseBoolean("2 != 2").EvalBoolean(this));
         }
 
         double IContext.CallFunction(string name, double[] arguments)

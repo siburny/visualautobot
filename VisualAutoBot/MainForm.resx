@@ -131,7 +131,7 @@
         AAAAAElFTkSuQmCC
 </value>
   </data>
-  <data name="toolRemove.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="toolRemoveNode.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
         YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAADySURBVDhPlZExDoIwGIV7Aa/h7OjMLHdw8AaegYO46Qg6
@@ -139,6 +139,15 @@
         ApvpxIZYY9VaD0Patl1KCMPpbmuiKDJJkjgQrA4QG45NACbJsuwLAKN2ppJh27mrAemu4BhAZyoC4ONh
         b+76Zms5RciE9Fe4nk/2RRzH5vV89B3xjJ2DAIh388f7BZBnLAAiRL6QAFg0MPh7NiiFoKT6AA/iThAS
         ASET0h0Ni11hBEYDIH4bCfj7CpSEjA5ThLhhpT5p1ADxb1uGMgAAAABJRU5ErkJggg==
+</value>
+  </data>
+  <data name="toolDuplicateNode.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAACTSURBVDhPtdBBCoAgEEDRbtVel+Laa3icWtQRtQLdTk0w
+        UNOUBiV8ItCHToMr5wxSKaV5q903PS3crJS65L2HEMJSRAiY4nxqHMY65A44IjHG+ydJgHMOrLVgjCk/
+        SQLwMP/vu15GagH8inN5A2CE4ExeARTNBc9VA7x/gOM1tdbiQeoC8PiNeCeAr8+AUo9AXRlWtVuLo8z4
+        +/IAAAAASUVORK5CYII=
 </value>
   </data>
   <data name="toolStartScript.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">

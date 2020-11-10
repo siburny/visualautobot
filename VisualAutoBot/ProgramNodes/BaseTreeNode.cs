@@ -32,7 +32,7 @@ namespace VisualAutoBot.ProgramNodes
         public static Dictionary<string, Type> AvailableTypes = new Dictionary<string, Type>()
         {
             { "WaitTreeNode", typeof(WaitTreeNode) },
-            { "CalcTreeNode", typeof(CalcTreeNode) },
+            { "ScriptTreeNode", typeof(ScriptTreeNode) },
             { "ScreenshotTreeNode", typeof(ScreenshotTreeNode) },
             { "MouseClickTreeNode", typeof(MouseClickTreeNode) },
             { "MatchTemplateTreeNode", typeof(MatchTemplateTreeNode) },
@@ -40,6 +40,64 @@ namespace VisualAutoBot.ProgramNodes
             { "ElseTreeNode", typeof(ElseTreeNode) },
             { "CommentTreeNode", typeof(CommentTreeNode) },
             { "ProgramTreeNode", typeof(ProgramTreeNode) },
+        };
+
+        public static Dictionary<Type, Type[]> NestedTypes = new Dictionary<Type, Type[]>()
+        {
+            { 
+                typeof(WaitTreeNode), 
+                new Type[] {
+                    typeof(LoopTreeNode), typeof(ProgramTreeNode), typeof(IfTreeNode), typeof(ElseTreeNode),
+                }
+            },
+            { 
+                typeof(ScriptTreeNode),
+                new Type[] {
+                    typeof(LoopTreeNode), typeof(ProgramTreeNode), typeof(IfTreeNode), typeof(ElseTreeNode), 
+                }
+            },
+            {
+                typeof(ScreenshotTreeNode), 
+                new Type[] { 
+                    typeof(LoopTreeNode), typeof(ProgramTreeNode), typeof(IfTreeNode), typeof(ElseTreeNode), 
+                }
+            },
+            { 
+                typeof(MouseClickTreeNode), 
+                new Type[] {
+                    typeof(LoopTreeNode), typeof(ProgramTreeNode), typeof(IfTreeNode), typeof(ElseTreeNode), 
+                }
+            },
+            {
+                typeof(MatchTemplateTreeNode),
+                new Type[] {
+                    typeof(LoopTreeNode), typeof(ProgramTreeNode), typeof(IfTreeNode), typeof(ElseTreeNode), 
+                }
+            },
+            {
+                typeof(IfTreeNode),
+                new Type[] {
+                    typeof(LoopTreeNode), typeof(ProgramTreeNode), typeof(IfTreeNode), typeof(ElseTreeNode), 
+                }
+            },
+            {
+                typeof(ElseTreeNode), 
+                new Type[] {
+                    typeof(LoopTreeNode), typeof(ProgramTreeNode), typeof(IfTreeNode), typeof(ElseTreeNode), 
+                }
+            },
+            { 
+                typeof(CommentTreeNode),
+                new Type[] { 
+                    typeof(LoopTreeNode), typeof(ProgramTreeNode), typeof(IfTreeNode), typeof(ElseTreeNode), 
+                }
+            },
+            { 
+                typeof(ProgramTreeNode),
+                new Type[] {
+                    typeof(LoopTreeNode), typeof(IfTreeNode), typeof(ElseTreeNode), 
+                }
+            },
         };
 
         internal Dictionary<string, object> Parameters = new Dictionary<string, object>();
@@ -113,7 +171,7 @@ namespace VisualAutoBot.ProgramNodes
             Refresh();
         }
 
-        public virtual JToken ToJSON()
+        public virtual JObject ToJSON()
         {
             JObject json = new JObject
             {
@@ -251,6 +309,7 @@ namespace VisualAutoBot.ProgramNodes
             }
         }
 
+        private static readonly Random random = new Random();
         double IContext.CallFunction(string name, double[] arguments)
         {
             switch (name.ToLower())
@@ -258,11 +317,11 @@ namespace VisualAutoBot.ProgramNodes
                 case "random":
                     if (arguments.Length == 1)
                     {
-                        return (new Random()).Next((int)arguments[0]);
+                        return random.Next((int)arguments[0]);
                     }
                     else if (arguments.Length == 2)
                     {
-                        return (new Random()).Next((int)arguments[0], (int)arguments[1]);
+                        return random.Next((int)arguments[0], (int)arguments[1]);
                     }
                     else
                     {

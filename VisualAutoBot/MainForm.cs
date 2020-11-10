@@ -274,7 +274,7 @@ namespace VisualAutoBot
                 return;
             }
 
-            var hit = programTreeView.HitTest(programTreeView.PointToClient(new System.Drawing.Point(e.X, e.Y)));
+            var hit = programTreeView.HitTest(programTreeView.PointToClient(new Point(e.X, e.Y)));
             if (hit.Node != null && hit.Node.Parent != null)
             {
                 draggedNode.Remove();
@@ -296,9 +296,8 @@ namespace VisualAutoBot
                 return;
             }
 
-            var hit = programTreeView.HitTest(programTreeView.PointToClient(new System.Drawing.Point(e.X, e.Y)));
-            if (hit.Node != null && hit.Node != draggedNode &&
-                hit.Node.Parent != null && hit.Node.Parent == draggedNode.Parent)
+            var hit = programTreeView.HitTest(programTreeView.PointToClient(new Point(e.X, e.Y)));
+            if (hit.Node != null && hit.Node != draggedNode && !hit.Node.FullPath.StartsWith(draggedNode.FullPath))
             {
                 e.Effect = DragDropEffects.Move;
             }
@@ -330,6 +329,35 @@ namespace VisualAutoBot
                 programTreeView.SelectedNode = clickedNode = node;
                 programTreeView_NodeMouseClick(sender, null);
             }
+        }
+
+        private void ToolRemoveNode_Click(object sender, EventArgs e)
+        {
+            if (clickedNode == null)
+            {
+                return;
+            }
+
+            if (MessageBox.Show("Are you sure?", "Confirm the deletion", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
+            {
+                clickedNode.Remove();
+                CancelButton_Click(this, null);
+            }
+        }
+
+        private void ToolDuplicateNode_Click(object sender, EventArgs e)
+        {
+            if(clickedNode == null || clickedNode is LoopTreeNode)
+            {
+                return;
+            }
+
+            BaseTreeNode copy = Activator.CreateInstance(clickedNode.GetType()) as BaseTreeNode;
+
+            JObject value = (clickedNode as BaseTreeNode).ToJSON();
+            copy.FromJSON(value);
+
+            clickedNode.Parent.Nodes.Insert(clickedNode.Parent.Nodes.IndexOf(clickedNode), copy);
         }
 
         private void ToolStartScript_Click(object sender, EventArgs e)
@@ -366,20 +394,6 @@ namespace VisualAutoBot
             BaseTreeNode.SignalToExit = true;
             toolStopScript.Text = "Stopping ...";
             toolStopScript.Enabled = false;
-        }
-
-        private void ToolRemove_Click(object sender, EventArgs e)
-        {
-            if(clickedNode == null)
-            {
-                return;
-            }
-
-            if (MessageBox.Show("Are you sure?", "Confirm the deletion", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
-            {
-                clickedNode.Remove();
-                CancelButton_Click(this, null);
-            }
         }
 
         #endregion

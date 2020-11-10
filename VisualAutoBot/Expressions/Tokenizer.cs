@@ -141,7 +141,7 @@ namespace VisualAutoBot.Expressions
                     }
                     else
                     {
-                        throw new SyntaxException($"Unexpected characters: '{_currentChar}'");
+                        _currentToken = Token.Assign;
                     }
                     return;
             }

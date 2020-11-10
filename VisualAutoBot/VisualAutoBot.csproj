@@ -94,6 +94,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Expressions\NodeAssign.cs" />
     <Compile Include="Expressions\NodeComparison.cs" />
     <Compile Include="Expressions\TestClass.cs" />
     <Compile Include="Expressions\IContext.cs" />
@@ -123,7 +124,7 @@
     <Compile Include="ProgramNodes\ElseTreeNode.cs" />
     <Compile Include="ProgramNodes\IRunnableTreeNode.cs" />
     <Compile Include="ProgramNodes\BaseTreeNode.cs" />
-    <Compile Include="ProgramNodes\CalcTreeNode.cs" />
+    <Compile Include="ProgramNodes\ScriptTreeNode.cs" />
     <Compile Include="ProgramNodes\ProgramTreeNode.cs" />
     <Compile Include="ProgramNodes\MouseClickTreeNode.cs" />
     <Compile Include="ProgramNodes\MatchTemplateTreeNode.cs" />

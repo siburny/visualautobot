@@ -17,13 +17,13 @@ namespace VisualAutoBot.Expressions
         string _functionName;
         Node[] _arguments;
 
-        public override double Eval(IContext ctx)
+        public override double EvalDouble(IContext ctx)
         {
             // Evaluate all arguments
             var argVals = new double[_arguments.Length];
             for (int i = 0; i < _arguments.Length; i++)
             {
-                argVals[i] = _arguments[i].Eval(ctx);
+                argVals[i] = _arguments[i].EvalDouble(ctx);
             }
 
             // Call the function

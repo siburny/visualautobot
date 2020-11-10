@@ -40,6 +40,39 @@ namespace VisualAutoBot.Expressions
             return expr;
         }
 
+        public NodeAssign ParseAssignExpression()
+        {
+            // For the moment, all we understand is add and subtract
+            var expr = ParseAssign();
+
+            // Check everything was consumed
+            if (_tokenizer.Token != Token.EOF)
+                throw new SyntaxException("Unexpected characters at end of expression");
+
+            return expr;
+        }
+
+        NodeAssign ParseAssign()
+        {
+            // Parse the left hand side
+            var lhs = ParseLeaf();
+
+            // Work out the operator
+            if (_tokenizer.Token != Token.Assign)
+            {
+                throw new SyntaxException("Unexpected characters in the assign expression");
+            }
+
+            // Skip the operator
+            _tokenizer.NextToken();
+
+            // Parse the right hand side of the expression
+            var rhs = ParseAddSubtract();
+
+            // Create a binary node and use it as the left-hand side from now on
+            return new NodeAssign(lhs, rhs);
+        }
+
         // Parse an sequence of add/subtract operators
         Node ParseComparison()
         {
@@ -276,12 +309,26 @@ namespace VisualAutoBot.Expressions
         #region Convenience Helpers
 
         // Static helper to parse a string
-        public static bool CanParse(string str, bool isBoolean = false)
+        public static bool CanParseDouble(string str)
         {
             try
             {
-                Parse(new Tokenizer(new StringReader(str)), isBoolean);
-                
+                ParseDouble(new Tokenizer(new StringReader(str)));
+
+                return true;
+            }
+            catch (SyntaxException)
+            {
+                return false;
+            }
+        }
+
+        public static bool CanParseBoolean(string str)
+        {
+            try
+            {
+                ParseBoolean(new Tokenizer(new StringReader(str)));
+
                 return true;
             }
             catch (SyntaxException)
@@ -291,23 +338,38 @@ namespace VisualAutoBot.Expressions
         }
 
         // Static helper to parse a string
-        public static Node Parse(string str, bool isBoolean = false)
+        public static Node ParseDouble(string str)
         {
-            return Parse(new Tokenizer(new StringReader(str)), isBoolean);
+            return ParseDouble(new Tokenizer(new StringReader(str)));
+        }
+
+        public static Node ParseBoolean(string str)
+        {
+            return ParseBoolean(new Tokenizer(new StringReader(str)));
+        }
+
+        public static NodeAssign ParseAssign(string str)
+        {
+            return ParseAssign(new Tokenizer(new StringReader(str)));
         }
 
         // Static helper to parse from a tokenizer
-        public static Node Parse(Tokenizer tokenizer, bool isBoolean)
+        public static Node ParseDouble(Tokenizer tokenizer)
         {
             var parser = new Parser(tokenizer);
-            if (isBoolean)
-            {
-                return parser.ParseBooleanExpression();
-            }
-            else
-            {
-                return parser.ParseExpression();
-            }
+            return parser.ParseExpression();
+        }
+
+        public static Node ParseBoolean(Tokenizer tokenizer)
+        {
+            var parser = new Parser(tokenizer);
+            return parser.ParseBooleanExpression();
+        }
+
+        public static NodeAssign ParseAssign(Tokenizer tokenizer)
+        {
+            var parser = new Parser(tokenizer);
+            return parser.ParseAssignExpression();
         }
 
         #endregion

@@ -36,7 +36,8 @@ namespace VisualAutoBot
             this.panelEditNode = new System.Windows.Forms.FlowLayoutPanel();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolAddNode = new System.Windows.Forms.ToolStripButton();
-            this.toolRemove = new System.Windows.Forms.ToolStripButton();
+            this.toolRemoveNode = new System.Windows.Forms.ToolStripButton();
+            this.toolDuplicateNode = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStartScript = new System.Windows.Forms.ToolStripButton();
             this.toolStopScript = new System.Windows.Forms.ToolStripButton();
@@ -90,7 +91,8 @@ namespace VisualAutoBot
             this.toolStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolAddNode,
-            this.toolRemove,
+            this.toolRemoveNode,
+            this.toolDuplicateNode,
             this.toolStripSeparator2,
             this.toolStartScript,
             this.toolStopScript});
@@ -109,14 +111,23 @@ namespace VisualAutoBot
             this.toolAddNode.Text = "Add";
             this.toolAddNode.Click += new System.EventHandler(this.ToolAddNode_Click);
             // 
-            // toolRemove
+            // toolRemoveNode
             // 
-            this.toolRemove.Image = ((System.Drawing.Image)(resources.GetObject("toolRemove.Image")));
-            this.toolRemove.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolRemove.Name = "toolRemove";
-            this.toolRemove.Size = new System.Drawing.Size(81, 28);
-            this.toolRemove.Text = "Delete";
-            this.toolRemove.Click += new System.EventHandler(this.ToolRemove_Click);
+            this.toolRemoveNode.Image = ((System.Drawing.Image)(resources.GetObject("toolRemoveNode.Image")));
+            this.toolRemoveNode.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolRemoveNode.Name = "toolRemoveNode";
+            this.toolRemoveNode.Size = new System.Drawing.Size(81, 28);
+            this.toolRemoveNode.Text = "Delete";
+            this.toolRemoveNode.Click += new System.EventHandler(this.ToolRemoveNode_Click);
+            // 
+            // toolDuplicateNode
+            // 
+            this.toolDuplicateNode.Image = ((System.Drawing.Image)(resources.GetObject("toolDuplicateNode.Image")));
+            this.toolDuplicateNode.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolDuplicateNode.Name = "toolDuplicateNode";
+            this.toolDuplicateNode.Size = new System.Drawing.Size(101, 28);
+            this.toolDuplicateNode.Text = "Duplicate";
+            this.toolDuplicateNode.Click += new System.EventHandler(this.ToolDuplicateNode_Click);
             // 
             // toolStripSeparator2
             // 
@@ -195,8 +206,9 @@ namespace VisualAutoBot
         private System.Windows.Forms.ToolStripButton toolAddNode;
         private System.Windows.Forms.ToolStripButton toolStartScript;
         private System.Windows.Forms.ToolStripButton toolStopScript;
-        private System.Windows.Forms.ToolStripButton toolRemove;
+        private System.Windows.Forms.ToolStripButton toolRemoveNode;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.NumericUpDown scriptDelayUpDown;
+        private System.Windows.Forms.ToolStripButton toolDuplicateNode;
     }
 }

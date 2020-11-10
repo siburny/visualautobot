@@ -16,13 +16,21 @@ namespace VisualAutoBot.Expressions
 
         string _variableName;
 
-        public override double Eval(IContext ctx)
+        public string Name
+        {
+            get
+            {
+                return _variableName;
+            }
+        }
+
+        public override double EvalDouble(IContext ctx)
         {
             return ctx.ResolveVariable(_variableName);
         }
         public override bool EvalBoolean(IContext ctx)
         {
-            throw new ArithmeticException("Cannot eval boolean node as double");
+            throw new ArithmeticException("Cannot eval variable as boolean");
         }
     }
 }

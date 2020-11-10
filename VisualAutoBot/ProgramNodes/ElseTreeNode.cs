@@ -49,9 +49,9 @@ namespace VisualAutoBot.ProgramNodes
             }
         }
 
-        public override JToken ToJSON()
+        public override JObject ToJSON()
         {
-            JToken json = base.ToJSON();
+            JObject json = base.ToJSON();
             JArray array = new JArray();
 
             json["Nodes"] = array;

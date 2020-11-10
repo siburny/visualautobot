@@ -18,5 +18,6 @@
         GreaterThanOrEqual,
         Equal,
         NotEqual,
+        Assign,
     }
 }

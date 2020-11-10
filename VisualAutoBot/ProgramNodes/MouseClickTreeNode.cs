@@ -1,13 +1,6 @@
-﻿using Newtonsoft.Json.Linq;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using VisualAutoBot.Expressions;
 
@@ -19,8 +12,8 @@ namespace VisualAutoBot.ProgramNodes
         {
             NodeText = "MouseClick";
 
-            Parameters.Add("X", "");
-            Parameters.Add("Y", "");
+            Parameters.Add("X", "MatchX");
+            Parameters.Add("Y", "MatchY");
 
             MenuItem previewMenu = new MenuItem("View Coordinates");
             previewMenu.Click += PreviewMenu_Click;
@@ -53,7 +46,7 @@ namespace VisualAutoBot.ProgramNodes
         {
             if (_data.ContainsKey("X"))
             {
-                if (!Parser.CanParse(_data["X"].ToString()))
+                if (!Parser.CanParseDouble(_data["X"].ToString()))
                 {
                     _data["X"] = "";
                 }
@@ -61,7 +54,7 @@ namespace VisualAutoBot.ProgramNodes
 
             if (_data.ContainsKey("Y"))
             {
-                if (!Parser.CanParse(_data["Y"].ToString()))
+                if (!Parser.CanParseDouble(_data["Y"].ToString()))
                 {
                     _data["Y"] = "";
                 }
@@ -84,8 +77,8 @@ namespace VisualAutoBot.ProgramNodes
 
         public override void Execute()
         {
-            double x = Parser.Parse(Parameters["X"].ToString()).Eval(this),
-                y = Parser.Parse(Parameters["Y"].ToString()).Eval(this);
+            double x = Parser.ParseDouble(Parameters["X"].ToString()).EvalDouble(this),
+                y = Parser.ParseDouble(Parameters["Y"].ToString()).EvalDouble(this);
 
             MouseControl.Click((int)x, (int)y);
 

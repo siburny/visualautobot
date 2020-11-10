@@ -18,11 +18,11 @@ namespace VisualAutoBot.Expressions
         Node _rhs;                              // Right hand side of the operation
         Func<double, double, double> _op;       // The callback operator
 
-        public override double Eval(IContext ctx)
+        public override double EvalDouble(IContext ctx)
         {
             // Evaluate both sides
-            var lhsVal = _lhs.Eval(ctx);
-            var rhsVal = _rhs.Eval(ctx);
+            var lhsVal = _lhs.EvalDouble(ctx);
+            var rhsVal = _rhs.EvalDouble(ctx);
 
             // Evaluate and return
             var result = _op(lhsVal, rhsVal);
