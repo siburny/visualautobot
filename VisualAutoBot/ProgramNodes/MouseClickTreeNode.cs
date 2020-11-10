@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -12,7 +13,7 @@ using VisualAutoBot.Expressions;
 
 namespace VisualAutoBot.ProgramNodes
 {
-    class MouseClickTreeNode : BaseTreeNode, IContext
+    class MouseClickTreeNode : BaseTreeNode
     {
         public MouseClickTreeNode()
         {
@@ -90,24 +91,5 @@ namespace VisualAutoBot.ProgramNodes
 
             ToolTipText = $"Clicked at ({x}, {y})";
         }
-    
-        #region Expression execution
-        double IContext.ResolveVariable(string name)
-        {
-            if (VariableExists(name))
-            {
-                return Convert.ToDouble(GetVariable(name));
-            }
-            else
-            {
-                throw new ScriptException($"Vriable '{name}' is not found.", this, false);
-            }
-        }
-
-        double IContext.CallFunction(string name, double[] arguments)
-        {
-            throw new NotImplementedException();
-        }
-        #endregion
     }
 }

@@ -12,7 +12,7 @@ using VisualAutoBot.Expressions;
 
 namespace VisualAutoBot.ProgramNodes
 {
-    class IfTreeNode : BaseTreeNode, IContext
+    class IfTreeNode : BaseTreeNode
     {
         public IfTreeNode()
         {
@@ -101,24 +101,5 @@ namespace VisualAutoBot.ProgramNodes
 
             return json;
         }
-
-        #region Expression execution
-        double IContext.ResolveVariable(string name)
-        {
-            if(VariableExists(name))
-            {
-                return Convert.ToDouble(GetVariable(name));
-            }
-            else
-            {
-                throw new ScriptException($"Vriable '{name}' is not found.", this, false);
-            }
-        }
-
-        double IContext.CallFunction(string name, double[] arguments)
-        {
-            throw new NotImplementedException();
-        }
-        #endregion
     }
 }

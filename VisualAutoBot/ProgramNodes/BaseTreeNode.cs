@@ -6,10 +6,11 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Threading;
 using System.Windows.Forms;
+using VisualAutoBot.Expressions;
 
 namespace VisualAutoBot.ProgramNodes
 {
-    abstract class BaseTreeNode : TreeNode, IRunnableTreeNode
+    abstract class BaseTreeNode : TreeNode, IRunnableTreeNode, IContext
     {
         public static bool SignalToExit = false;
         public static int Delay = 0;
@@ -228,5 +229,41 @@ namespace VisualAutoBot.ProgramNodes
         {
             return _variables.ContainsKey(name);
         }
+
+        #region Expression execution
+        double IContext.ResolveVariable(string name)
+        {
+            if (VariableExists(name))
+            {
+                return Convert.ToDouble(GetVariable(name));
+            }
+            else
+            {
+                throw new ScriptException($"Vriable '{name}' is not found.", this, false);
+            }
+        }
+
+        double IContext.CallFunction(string name, double[] arguments)
+        {
+            switch (name.ToLower())
+            {
+                case "random":
+                    if (arguments.Length == 1)
+                    {
+                        return (new Random()).Next((int)arguments[0]);
+                    }
+                    else if (arguments.Length == 2)
+                    {
+                        return (new Random()).Next((int)arguments[0], (int)arguments[1]);
+                    }
+                    else
+                    {
+                        throw new ScriptException($"Function '{name}' accept one or two parameters only ({arguments.Length} passed)", this);
+                    }
+                default:
+                    throw new ScriptException($"Call to an unknown function '{name}'", this);
+            }
+        }
+        #endregion
     }
 }

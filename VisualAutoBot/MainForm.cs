@@ -103,12 +103,16 @@ namespace VisualAutoBot
             catch (Exception) { }
 
             JArray json = JArray.Parse(file);
-            if(json[0] != null && json[0] is JObject && (json[0] as JObject).ContainsKey("Type") && ((json[0] as JObject)["Type"] as JValue).Value.ToString() == "LoopTreeNode")
+            if (json.Count > 0 && json[0] != null && json[0] is JObject && (json[0] as JObject).ContainsKey("Type") && ((json[0] as JObject)["Type"] as JValue).Value.ToString() == "LoopTreeNode")
             {
-                foreach(JObject obj in json)
+                foreach (JObject obj in json)
                 {
                     BaseTreeNode.Create(obj, programTreeView.Nodes);
                 }
+            }
+            else
+            {
+                EnsureLoopNode();
             }
             programTreeView.ExpandAll();
         }
@@ -124,7 +128,8 @@ namespace VisualAutoBot
 
             try
             {
-                File.Move("script.json", "script-" + DateTime.Now.ToString("yyyyMMdd'-'HHmmss") + ".json");
+                Directory.CreateDirectory("backup");
+                File.Move("script.json", "backup" + Path.PathSeparator + "script-" + DateTime.Now.ToString("yyyyMMdd'-'HHmmss") + ".json");
             }
             catch(Exception) { }
 
