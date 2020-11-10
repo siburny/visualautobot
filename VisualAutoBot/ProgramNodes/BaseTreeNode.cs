@@ -37,6 +37,8 @@ namespace VisualAutoBot.ProgramNodes
             { "MatchTemplateTreeNode", typeof(MatchTemplateTreeNode) },
             { "IfTreeNode", typeof(IfTreeNode) },
             { "ElseTreeNode", typeof(ElseTreeNode) },
+            { "CommentTreeNode", typeof(CommentTreeNode) },
+
         };
 
         internal Dictionary<string, object> Parameters = new Dictionary<string, object>();
@@ -139,7 +141,7 @@ namespace VisualAutoBot.ProgramNodes
 
         public void Run()
         {
-            Boolean highlight = !(this is LoopTreeNode || this is IfTreeNode || this is ElseTreeNode);
+            Boolean highlight = !(this is LoopTreeNode || this is IfTreeNode || this is ElseTreeNode || this is CommentTreeNode);
 
             if (highlight)
             {
@@ -170,12 +172,15 @@ namespace VisualAutoBot.ProgramNodes
 
         public void ClearError()
         {
-            ToolTipText = "";
-            BackColor = Color.Empty;
-
-            foreach(var node in Nodes)
+            if (!(this is CommentTreeNode))
             {
-                (node as BaseTreeNode).ClearError();
+                ToolTipText = "";
+                BackColor = Color.Empty;
+
+                foreach (var node in Nodes)
+                {
+                    (node as BaseTreeNode).ClearError();
+                }
             }
         }
 

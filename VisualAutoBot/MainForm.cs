@@ -327,10 +327,10 @@ namespace VisualAutoBot
                 return;
             }
 
-            string selected = CustomDialog.ShowSelectionDialog(BaseTreeNode.AvailableTypes.Select(x => x.Key).ToArray());
+            string selected = CustomDialog.ShowSelectionDialog(BaseTreeNode.AvailableTypes.Select(x => x.Key.Replace("TreeNode", "")).OrderBy(x => x).ToArray());
             if(!string.IsNullOrEmpty(selected))
             {
-                BaseTreeNode node = Activator.CreateInstance(BaseTreeNode.AvailableTypes[selected]) as BaseTreeNode;
+                BaseTreeNode node = Activator.CreateInstance(BaseTreeNode.AvailableTypes[selected + "TreeNode"]) as BaseTreeNode;
                 clickedNode.Nodes.Add(node);
 
                 programTreeView.ExpandAll();

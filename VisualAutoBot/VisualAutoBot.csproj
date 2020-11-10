@@ -127,6 +127,7 @@
     <Compile Include="ProgramNodes\MouseClickTreeNode.cs" />
     <Compile Include="ProgramNodes\MatchTemplateTreeNode.cs" />
     <Compile Include="ProgramNodes\IfTreeNode.cs" />
+    <Compile Include="ProgramNodes\CommentTreeNode.cs" />
     <Compile Include="ProgramNodes\WaitTreeNode.cs" />
     <Compile Include="ProgramNodes\ScreenshotTreeNode.cs" />
     <Compile Include="ProgramNodes\LoopTreeNode.cs" />

@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
@@ -25,7 +26,7 @@ namespace VisualAutoBot
         {
             CustomDialog dlg = new CustomDialog();
 
-            foreach(var option in options)
+            foreach(var option in options.Reverse())
             {
                 Button btn = new Button();
                 btn.Tag = btn.Text = option;
