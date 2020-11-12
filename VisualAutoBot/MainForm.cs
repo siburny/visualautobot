@@ -129,7 +129,7 @@ namespace VisualAutoBot
             try
             {
                 Directory.CreateDirectory("backup");
-                File.Move("script.json", "backup" + Path.PathSeparator + "script-" + DateTime.Now.ToString("yyyyMMdd'-'HHmmss") + ".json");
+                File.Move("script.json", "backup" + Path.DirectorySeparatorChar + "script-" + DateTime.Now.ToString("yyyyMMdd'-'HHmmss") + ".json");
             }
             catch(Exception) { }
 

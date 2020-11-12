@@ -15,7 +15,6 @@ namespace VisualAutoBot.ProgramNodes
             NodeText = "Loop";
 
             Parameters.Add("WindowName", "TrainStation - Pixel");
-            SetVariable("WindowName", "TrainStation - Pixel");
         }
 
         public override void Execute()
@@ -25,8 +24,8 @@ namespace VisualAutoBot.ProgramNodes
             {
                 throw new ScriptException($"Cannot find game window: {Parameters["WindowName"]}", this);
             }
-            
-            SetVariable("WindowHandle", window);
+
+            SetVariable("WindowName", "TrainStation - Pixel");
 
             foreach (var node in Nodes)
             {
