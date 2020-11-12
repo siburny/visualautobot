@@ -277,8 +277,21 @@ namespace VisualAutoBot
             var hit = programTreeView.HitTest(programTreeView.PointToClient(new Point(e.X, e.Y)));
             if (hit.Node != null && hit.Node.Parent != null)
             {
+                bool IsSub = BaseTreeNode.NestedTypes.ContainsKey(draggedNode.GetType())
+                    && BaseTreeNode.NestedTypes[draggedNode.GetType()].Contains(hit.Node.GetType()) && draggedNode.Parent != hit.Node;
+                
                 draggedNode.Remove();
-                hit.Node.Parent.Nodes.Insert(hit.Node.Parent.Nodes.IndexOf(hit.Node), draggedNode);
+
+                if (IsSub)
+                {
+                    hit.Node.Nodes.Add(draggedNode);
+                }
+                else
+                {
+                    hit.Node.Parent.Nodes.Insert(hit.Node.Parent.Nodes.IndexOf(hit.Node), draggedNode);
+                }
+
+                hit.Node.Parent.ExpandAll();
             }
         }
 
@@ -297,7 +310,8 @@ namespace VisualAutoBot
             }
 
             var hit = programTreeView.HitTest(programTreeView.PointToClient(new Point(e.X, e.Y)));
-            if (hit.Node != null && hit.Node != draggedNode && !hit.Node.FullPath.StartsWith(draggedNode.FullPath))
+            if (hit.Node != null && hit.Node != draggedNode &&
+                (!hit.Node.FullPath.StartsWith(draggedNode.FullPath) || draggedNode.FullPath.StartsWith(hit.Node.FullPath)))
             {
                 e.Effect = DragDropEffects.Move;
             }
