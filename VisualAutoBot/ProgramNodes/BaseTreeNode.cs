@@ -296,6 +296,11 @@ namespace VisualAutoBot.ProgramNodes
             return _variables.ContainsKey(name);
         }
 
+        public static void ClearVariables()
+        {
+            _variables.Clear();
+        }
+
         #region Expression execution
         double IContext.ResolveVariable(string name)
         {
@@ -317,15 +322,24 @@ namespace VisualAutoBot.ProgramNodes
                 case "random":
                     if (arguments.Length == 1)
                     {
-                        return random.Next((int)arguments[0]);
+                        return random.Next(Convert.ToInt32(arguments[0]));
                     }
                     else if (arguments.Length == 2)
                     {
-                        return random.Next((int)arguments[0], (int)arguments[1]);
+                        return random.Next(Convert.ToInt32(arguments[0]), Convert.ToInt32(arguments[1]));
                     }
                     else
                     {
-                        throw new ScriptException($"Function '{name}' accept one or two parameters only ({arguments.Length} passed)", this);
+                        throw new ScriptException($"Function '{name}' accepts one or two arguments only ({arguments.Length} passed)", this);
+                    }
+                case "define":
+                    if (arguments.Length == 1)
+                    {
+                        return arguments[0];
+                    }
+                    else
+                    {
+                        throw new ScriptException($"Function '{name}' accepts one argument only ({arguments.Length} passed)", this);
                     }
                 default:
                     throw new ScriptException($"Call to an unknown function '{name}'", this);

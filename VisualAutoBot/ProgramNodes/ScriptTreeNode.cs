@@ -26,7 +26,8 @@ namespace VisualAutoBot.ProgramNodes
         {
             if (!string.IsNullOrEmpty(Parameters["Expression"].ToString()))
             {
-                Parser.ParseAssign(Parameters["Expression"].ToString()).EvalAssign(this);
+                double result = Parser.ParseAssign(Parameters["Expression"].ToString()).EvalAssign(this);
+                ToolTipText = $"Assign value: {result}";
             }
         }
     }

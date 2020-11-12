@@ -27,13 +27,25 @@ namespace VisualAutoBot.Expressions
             throw new ArithmeticException("Cannot eval script node as boolean");
         }
 
-        public void EvalAssign(IContext ctx)
+        public double EvalAssign(IContext ctx)
         {
             if(_lhs is NodeVariable variable)
             {
                 var rhsVal = _rhs.EvalDouble(ctx);
+                
+                if (_rhs is NodeFunctionCall function && function.FunctionName.ToLower() == "define")
+                {
+                    if (!BaseTreeNode.VariableExists(variable.Name))
+                    {
+                        BaseTreeNode.SetVariable(variable.Name, rhsVal);
+                    }
+                }
+                else
+                {
+                    BaseTreeNode.SetVariable(variable.Name, rhsVal);
+                }
 
-                BaseTreeNode.SetVariable(variable.Name, rhsVal);
+                return rhsVal;
             }
             else
             {

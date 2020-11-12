@@ -14,8 +14,16 @@ namespace VisualAutoBot.Expressions
             _arguments = arguments;
         }
 
-        string _functionName;
-        Node[] _arguments;
+        readonly string _functionName;
+        readonly Node[] _arguments;
+
+        public string FunctionName
+        {
+            get
+            {
+                return _functionName;
+            }
+        }
 
         public override double EvalDouble(IContext ctx)
         {

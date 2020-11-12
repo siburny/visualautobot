@@ -105,7 +105,6 @@
     <Compile Include="Expressions\NodeUnary.cs" />
     <Compile Include="Expressions\NodeVariable.cs" />
     <Compile Include="Expressions\Parser.cs" />
-    <Compile Include="Expressions\ReflectionContext.cs" />
     <Compile Include="Expressions\SyntaxException.cs" />
     <Compile Include="Expressions\Token.cs" />
     <Compile Include="Expressions\Tokenizer.cs" />

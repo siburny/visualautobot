@@ -384,8 +384,11 @@ namespace VisualAutoBot
             CancelButton_Click(this, null);
 
             BaseTreeNode.SignalToExit = false;
+            BaseTreeNode.ClearVariables();
+            
             IsRunning = true;
             toolAddNode.Enabled = false;
+            toolRemoveNode.Enabled = false;
             toolStartScript.Enabled = false;
             toolStopScript.Enabled = true;
 
@@ -440,6 +443,7 @@ namespace VisualAutoBot
             {
                 IsRunning = false;
                 toolAddNode.Enabled = true;
+                toolRemoveNode.Enabled = true;
                 toolStartScript.Enabled = true;
                 toolStopScript.Enabled = false;
 
