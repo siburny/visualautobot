@@ -285,13 +285,13 @@ namespace VisualAutoBot
                 if (IsSub)
                 {
                     hit.Node.Nodes.Add(draggedNode);
+                    hit.Node.ExpandAll();
                 }
                 else
                 {
                     hit.Node.Parent.Nodes.Insert(hit.Node.Parent.Nodes.IndexOf(hit.Node), draggedNode);
+                    hit.Node.Parent.ExpandAll();
                 }
-
-                hit.Node.Parent.ExpandAll();
             }
         }
 
