@@ -31,6 +31,14 @@ namespace VisualAutoBot.Expressions
             Assert.IsFalse(Parser.ParseBoolean("2 != 2").EvalBoolean(this));
         }
 
+        [TestMethod]
+        public void TestBinary()
+        {
+            Assert.AreEqual(Parser.ParseBoolean("2 % 2").EvalDouble(this), 0);
+            Assert.AreEqual(Parser.ParseBoolean("2 % 0").EvalDouble(this), double.NaN);
+            Assert.AreEqual(Parser.ParseBoolean("6 % 5").EvalDouble(this), 1);
+        }
+
         double IContext.CallFunction(string name, double[] arguments)
         {
             throw new System.NotImplementedException();

@@ -174,6 +174,10 @@ namespace VisualAutoBot.Expressions
                 {
                     op = (a, b) => a / b;
                 }
+                else if (_tokenizer.Token == Token.Modulus)
+                {
+                    op = (a, b) => a % b;
+                }
 
                 // Binary operator found?
                 if (op == null)

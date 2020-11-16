@@ -19,5 +19,6 @@
         Equal,
         NotEqual,
         Assign,
+        Modulus,
     }
 }

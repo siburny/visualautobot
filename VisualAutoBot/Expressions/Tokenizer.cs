@@ -78,6 +78,11 @@ namespace VisualAutoBot.Expressions
                     _currentToken = Token.Divide;
                     return;
 
+                case '%':
+                    NextChar();
+                    _currentToken = Token.Modulus;
+                    return;
+
                 case '(':
                     NextChar();
                     _currentToken = Token.OpenParens;
