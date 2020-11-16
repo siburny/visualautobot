@@ -16,6 +16,7 @@ namespace VisualAutoBot
     public partial class MainForm : Form
     {
         public bool IsRunning = false;
+        Font font = new Font("Helvetica", 7);
 
         public MainForm()
         {
@@ -454,6 +455,27 @@ namespace VisualAutoBot
         private void ScriptDelayUpDown_ValueChanged(object sender, EventArgs e)
         {
             BaseTreeNode.Delay = (int)scriptDelayUpDown.Value;
+        }
+
+        private void programTreeView_DrawNode(object sender, DrawTreeNodeEventArgs e)
+        {
+            e.DrawDefault = true;
+
+            BaseTreeNode node = e.Node as BaseTreeNode;
+
+            var size = e.Graphics.MeasureString($"{node.Timing:N0} ms", font);
+
+            e.Graphics.DrawString($"{node.Timing:N0} ms", font, Brushes.Red, programTreeView.Width - size.Width - 10 - SystemInformation.VerticalScrollBarWidth, e.Bounds.Y);
+        }
+
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                CreateParams cp = base.CreateParams;
+                cp.ExStyle |= 0x02000000;  // Turn on WS_EX_COMPOSITED
+                return cp;
+            }
         }
     }
 }

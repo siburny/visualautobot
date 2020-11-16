@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
@@ -29,6 +30,8 @@ namespace VisualAutoBot.ProgramNodes
             }
         }
 
+        public double Timing { get; set; }
+
         public static Dictionary<string, Type> AvailableTypes = new Dictionary<string, Type>()
         {
             { "WaitTreeNode", typeof(WaitTreeNode) },
@@ -44,58 +47,58 @@ namespace VisualAutoBot.ProgramNodes
 
         public static Dictionary<Type, Type[]> NestedTypes = new Dictionary<Type, Type[]>()
         {
-            { 
-                typeof(WaitTreeNode), 
+            {
+                typeof(WaitTreeNode),
                 new Type[] {
                     typeof(LoopTreeNode), typeof(ProgramTreeNode), typeof(IfTreeNode), typeof(ElseTreeNode),
                 }
             },
-            { 
+            {
                 typeof(ScriptTreeNode),
                 new Type[] {
-                    typeof(LoopTreeNode), typeof(ProgramTreeNode), typeof(IfTreeNode), typeof(ElseTreeNode), 
+                    typeof(LoopTreeNode), typeof(ProgramTreeNode), typeof(IfTreeNode), typeof(ElseTreeNode),
                 }
             },
             {
-                typeof(ScreenshotTreeNode), 
-                new Type[] { 
-                    typeof(LoopTreeNode), typeof(ProgramTreeNode), typeof(IfTreeNode), typeof(ElseTreeNode), 
+                typeof(ScreenshotTreeNode),
+                new Type[] {
+                    typeof(LoopTreeNode), typeof(ProgramTreeNode), typeof(IfTreeNode), typeof(ElseTreeNode),
                 }
             },
-            { 
-                typeof(MouseClickTreeNode), 
+            {
+                typeof(MouseClickTreeNode),
                 new Type[] {
-                    typeof(LoopTreeNode), typeof(ProgramTreeNode), typeof(IfTreeNode), typeof(ElseTreeNode), 
+                    typeof(LoopTreeNode), typeof(ProgramTreeNode), typeof(IfTreeNode), typeof(ElseTreeNode),
                 }
             },
             {
                 typeof(MatchTemplateTreeNode),
                 new Type[] {
-                    typeof(LoopTreeNode), typeof(ProgramTreeNode), typeof(IfTreeNode), typeof(ElseTreeNode), 
+                    typeof(LoopTreeNode), typeof(ProgramTreeNode), typeof(IfTreeNode), typeof(ElseTreeNode),
                 }
             },
             {
                 typeof(IfTreeNode),
                 new Type[] {
-                    typeof(LoopTreeNode), typeof(ProgramTreeNode), typeof(IfTreeNode), typeof(ElseTreeNode), 
+                    typeof(LoopTreeNode), typeof(ProgramTreeNode), typeof(IfTreeNode), typeof(ElseTreeNode),
                 }
             },
             {
-                typeof(ElseTreeNode), 
+                typeof(ElseTreeNode),
                 new Type[] {
-                    typeof(LoopTreeNode), typeof(ProgramTreeNode), typeof(IfTreeNode), typeof(ElseTreeNode), 
+                    typeof(LoopTreeNode), typeof(ProgramTreeNode), typeof(IfTreeNode), typeof(ElseTreeNode),
                 }
             },
-            { 
+            {
                 typeof(CommentTreeNode),
-                new Type[] { 
-                    typeof(LoopTreeNode), typeof(ProgramTreeNode), typeof(IfTreeNode), typeof(ElseTreeNode), 
+                new Type[] {
+                    typeof(LoopTreeNode), typeof(ProgramTreeNode), typeof(IfTreeNode), typeof(ElseTreeNode),
                 }
             },
-            { 
+            {
                 typeof(ProgramTreeNode),
                 new Type[] {
-                    typeof(LoopTreeNode), typeof(IfTreeNode), typeof(ElseTreeNode), 
+                    typeof(LoopTreeNode), typeof(IfTreeNode), typeof(ElseTreeNode),
                 }
             },
         };
@@ -202,7 +205,10 @@ namespace VisualAutoBot.ProgramNodes
 
         public void Run()
         {
-            Boolean highlight = !(this is LoopTreeNode || this is IfTreeNode || this is ElseTreeNode || this is CommentTreeNode);
+            Stopwatch watch = new Stopwatch();
+            watch.Start();
+
+            bool highlight = !(this is LoopTreeNode || this is IfTreeNode || this is ElseTreeNode || this is CommentTreeNode);
 
             if (highlight)
             {
@@ -218,7 +224,7 @@ namespace VisualAutoBot.ProgramNodes
                     Thread.Sleep(Delay);
                 }
             }
-            catch(ScriptException e)
+            catch (ScriptException e)
             {
                 BackColor = Color.Red;
                 ToolTipText = e.Message;
@@ -229,6 +235,9 @@ namespace VisualAutoBot.ProgramNodes
             {
                 BackColor = _backColor;
             }
+
+            watch.Stop();
+            Timing = watch.ElapsedMilliseconds;
         }
 
         public void ClearError()
@@ -258,11 +267,11 @@ namespace VisualAutoBot.ProgramNodes
             }
         }
 
-        public static T GetVariable<T>(string name) 
+        public static T GetVariable<T>(string name)
         {
             if (_variables.ContainsKey(name))
             {
-                if(_variables[name] is T)
+                if (_variables[name] is T)
                     return (T)_variables[name];
                 else
                 {

@@ -31,7 +31,7 @@ namespace VisualAutoBot
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            this.programTreeView = new System.Windows.Forms.TreeView();
+            this.programTreeView = new VisualAutoBot.DBTreeView();
             this.buttonAddNode = new System.Windows.Forms.Button();
             this.panelEditNode = new System.Windows.Forms.FlowLayoutPanel();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
@@ -51,6 +51,7 @@ namespace VisualAutoBot
             this.programTreeView.AllowDrop = true;
             this.programTreeView.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
+            this.programTreeView.DrawMode = System.Windows.Forms.TreeViewDrawMode.OwnerDrawAll;
             this.programTreeView.FullRowSelect = true;
             this.programTreeView.HideSelection = false;
             this.programTreeView.Location = new System.Drawing.Point(0, 36);
@@ -62,6 +63,7 @@ namespace VisualAutoBot
             this.programTreeView.Size = new System.Drawing.Size(556, 1631);
             this.programTreeView.TabIndex = 0;
             this.programTreeView.TabStop = false;
+            this.programTreeView.DrawNode += new System.Windows.Forms.DrawTreeNodeEventHandler(this.programTreeView_DrawNode);
             this.programTreeView.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.ProgramTreeView_ItemDrag);
             this.programTreeView.BeforeSelect += new System.Windows.Forms.TreeViewCancelEventHandler(this.programTreeView_BeforeSelect);
             this.programTreeView.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.programTreeView_NodeMouseClick);
@@ -199,7 +201,7 @@ namespace VisualAutoBot
 
         #endregion
 
-        private System.Windows.Forms.TreeView programTreeView;
+        private DBTreeView programTreeView;
         private System.Windows.Forms.Button buttonAddNode;
         internal System.Windows.Forms.FlowLayoutPanel panelEditNode;
         private System.Windows.Forms.ToolStrip toolStrip1;

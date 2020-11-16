@@ -94,6 +94,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DBTreeView.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Expressions\NodeAssign.cs" />
     <Compile Include="Expressions\NodeComparison.cs" />
     <Compile Include="Expressions\TestClass.cs" />
